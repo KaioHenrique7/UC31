@@ -1,0 +1,40 @@
+# Dependências
+node_modules/
+
+# Arquivos de ambiente
+.env
+.env.local
+
+# Build TypeScript
+dist/
+build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Uploads de usuários
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+
+# Testes
+coverage/
+
+# Cache
+.cache/
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Banco local
+*.sqlite
+*.db
