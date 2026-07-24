@@ -23,6 +23,7 @@ export class OrdemRepository {
 
   buscarPorId(id: string): OrdemServico | undefined {
     return this.ler().find(o => o.id === id);
+    
   }
 
   criar(ordem: OrdemServico): void {
