@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-    const cliente = await repository.buscarPorId(Number(req.params.id));
+    const cliente = await repository.buscarPorId((req.params.id));
 
     if (!cliente) {
         return res.status(404).json({ mensagem: "Cliente não encontrado." });
@@ -25,12 +25,12 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-    const cliente = await repository.atualizar(Number(req.params.id), req.body);
+    const cliente = repository.atualizar((req.params.id), req.body);
     res.json(cliente);
 });
 
 router.delete("/:id", async (req, res) => {
-    await repository.remover(Number(req.params.id));
+    await repository.remover((req.params.id));
     res.sendStatus(204);
 })
 export default router; 

@@ -31,7 +31,7 @@ export class ClienteRepository {
     this.salvar(clientes);
   }
 
-  atualizar(cliente: Cliente): void {
+  atualizar(p0: string, cliente: Cliente): void {
     const clientes = this.ler();
 
     const index = clientes.findIndex(c => c.id === cliente.id);
