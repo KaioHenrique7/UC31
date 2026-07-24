@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Arquivos</title>
+
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background:#f4f4f4;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .container{
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,.2);
+            width:400px;
+            text-align:center;
+        }
+
+        h1{
+            margin-bottom:20px;
+            color:#0d6efd;
+        }
+
+        input[type="file"]{
+            width:100%;
+            margin:20px 0;
+        }
+
+        button{
+            background:#0d6efd;
+            color:white;
+            border:none;
+            padding:10px 20px;
+            border-radius:5px;
+            cursor:pointer;
+            width:100%;
+        }
+
+        button:hover{
+            background:#084298;
+        }
+
+        a{
+            display:block;
+            margin-top:20px;
+            text-decoration:none;
+            color:#0d6efd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Upload de Arquivo</h1>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+
+        <input type="file" name="arquivo" required>
+
+        <button type="submit">Enviar Arquivo</button>
+
+    </form>
+
+    <a href="/">Voltar para a Home</a>
+
+</div>
+
+</body>
+</html>
+
