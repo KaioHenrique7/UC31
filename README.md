@@ -1,4 +1,4 @@
-# 🚗 Sistema de Oficina Mecânica
+#  Sistema de Oficina Mecânica
 
 Sistema web desenvolvido em Node.js, TypeScript e Express para gerenciamento de uma oficina mecânica.
 
