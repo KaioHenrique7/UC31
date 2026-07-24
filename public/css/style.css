@@ -1,0 +1,150 @@
+/* Reset */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    color:#333;
+}
+
+/* Cabeçalho */
+header{
+    background:#0d6efd;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+/* Menu */
+nav{
+    background:#084298;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    padding:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#ffd43b;
+}
+
+/* Conteúdo */
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:30px auto;
+}
+
+/* Títulos */
+h1,h2{
+    margin-bottom:20px;
+}
+
+/* Cards */
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+    margin-bottom:20px;
+}
+
+/* Formulários */
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+input,
+select,
+textarea{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:16px;
+}
+
+textarea{
+    resize:none;
+}
+
+button{
+    background:#0d6efd;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#0b5ed7;
+}
+
+/* Tabelas */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    background:white;
+}
+
+th{
+    background:#0d6efd;
+    color:white;
+}
+
+th,td{
+    padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+tr:nth-child(even){
+    background:#f2f2f2;
+}
+
+/* Botões */
+
+.btn{
+    padding:8px 15px;
+    border-radius:5px;
+    text-decoration:none;
+    color:white;
+}
+
+.btn-editar{
+    background:#198754;
+}
+
+.btn-excluir{
+    background:#dc3545;
+}
+
+.btn-voltar{
+    background:#6c757d;
+}
+
+/* Rodapé */
+
+footer{
+    margin-top:40px;
+    background:#212529;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
