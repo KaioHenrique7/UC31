@@ -5,12 +5,12 @@ const router = Router();
 const repository = new VeiculoRepository();
 
 router.get("/", async (req, res) => {
-    const veiculos = await repository.listar();
+    const veiculos = repository.listar();
     res.json(veiculos);
 });
 
 router.get("/:id", async (req, res) => {
-    const veiculo = await repository.buscarPorId(Number(req.params.id));
+    const veiculo = repository.buscarPorId(req.params.id);
 
     if (!veiculo) {
         return res.status(404).json({ mensagem: "Veículo não encontrado." });
@@ -20,17 +20,23 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const veiculo = await repository.criar(req.body);
-    res.status(201).json(veiculo);
+    repository.criar(req.body);
+    res.status(201).json(req.body);
 });
 
 router.put("/:id", async (req, res) => {
-    const veiculo = await repository.atualizar(Number(req.params.id), req.body);
-    res.json(veiculo);
+    const veiculoAtualizado = {
+        ...req.body,
+        id: req.params.id
+    };
+
+    repository.atualizar(veiculoAtualizado);
+
+    res.json(veiculoAtualizado);
 });
 
 router.delete("/:id", async (req, res) => {
-    await repository.remover(Number(req.params.id));
+    repository.remover(req.params.id);
     res.sendStatus(204);
 });
 
