@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { OrdemServico } from "../entities/ordemservico";
+import { OrdemServico } from "../entities/OrdemServiço";
 
 export class OrdemRepository {
   private caminho = path.join(__dirname, "../../dados/ordens.json");
