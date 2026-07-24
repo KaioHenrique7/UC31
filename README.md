@@ -26,10 +26,10 @@ O sistema permite cadastrar clientes, veículos, ordens de serviço e usuários,
 
 | Nome | Função |
 |-------|---------|
-| Kaio Henrique Fernandes da Silva | Back-end |
-| Integrante 2 | Front-end |
-| Integrante 3 | QA/Testes |
-| Integrante 4 | Líder Técnico |
+| Rosalvo Davi | Back-end |
+| Mariana Noronha | Front-end |
+| Maria Leticia | QA/Testes |
+| Kaio Henrique Fernandes da Silva | Líder Técnico |
 
 ---
 
