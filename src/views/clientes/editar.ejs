@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cliente</title>
+</head>
+<body>
+
+<h1>Editar Cliente</h1>
+
+<form action="/clientes/<%= cliente.id %>?_method=PUT" method="POST">
+
+    <label>Nome</label><br>
+    <input
+        type="text"
+        name="nome"
+        value="<%= cliente.nome %>"
+    ><br><br>
+
+    <label>Telefone</label><br>
+    <input
+        type="text"
+        name="telefone"
+        value="<%= cliente.telefone %>"
+    ><br><br>
+
+    <label>Email</label><br>
+    <input
+        type="email"
+        name="email"
+        value="<%= cliente.email %>"
+    ><br><br>
+
+    <button type="submit">Salvar</button>
+
+</form>
+
+<br>
+
+<a href="/clientes">Voltar</a>
+
+</body>
+</html>

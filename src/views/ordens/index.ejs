@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ordens de Serviço</title>
+</head>
+<body>
+
+<h1>Ordens de Serviço</h1>
+
+<a href="/ordens/novo">Nova Ordem</a>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Status</th>
+        <th>Ações</th>
+    </tr>
+
+    <% ordens.forEach(ordem => { %>
+        <tr>
+            <td><%= ordem.id %></td>
+            <td><%= ordem.descricao %></td>
+            <td><%= ordem.status %></td>
+            <td>
+                <a href="/ordens/<%= ordem.id %>">Detalhes</a>
+                <a href="/ordens/<%= ordem.id %>/editar">Editar</a>
+            </td>
+        </tr>
+    <% }) %>
+
+</table>
+
+</body>
+</html>

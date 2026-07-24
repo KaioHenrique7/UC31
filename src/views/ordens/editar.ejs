@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Ordem</title>
+</head>
+<body>
+
+<h1>Editar Ordem de Serviço</h1>
+
+<form action="/ordens/<%= ordem.id %>?_method=PUT" method="POST">
+
+    <label>Descrição</label><br>
+    <input
+        type="text"
+        name="descricao"
+        value="<%= ordem.descricao %>"
+    ><br><br>
+
+    <label>Status</label><br>
+    <input
+        type="text"
+        name="status"
+        value="<%= ordem.status %>"
+    ><br><br>
+
+    <button type="submit">Salvar</button>
+
+</form>
+
+<br>
+
+<a href="/ordens">Voltar</a>
+
+</body>
+</html>

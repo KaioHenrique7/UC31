@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Veículos</title>
+</head>
+<body>
+
+<h1>Lista de Veículos</h1>
+
+<a href="/veiculos/novo">Novo Veículo</a>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Placa</th>
+        <th>Ações</th>
+    </tr>
+
+    <% veiculos.forEach(veiculo => { %>
+        <tr>
+            <td><%= veiculo.id %></td>
+            <td><%= veiculo.marca %></td>
+            <td><%= veiculo.modelo %></td>
+            <td><%= veiculo.placa %></td>
+            <td>
+                <a href="/veiculos/<%= veiculo.id %>">Detalhes</a>
+                <a href="/veiculos/<%= veiculo.id %>/editar">Editar</a>
+            </td>
+        </tr>
+    <% }) %>
+
+</table>
+
+</body>
+</html>

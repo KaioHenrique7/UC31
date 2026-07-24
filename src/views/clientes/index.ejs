@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+
+<h1>Lista de Clientes</h1>
+
+<a href="/clientes/novo">Novo Cliente</a>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Ações</th>
+    </tr>
+
+    <% clientes.forEach(cliente => { %>
+        <tr>
+            <td><%= cliente.id %></td>
+            <td><%= cliente.nome %></td>
+            <td><%= cliente.telefone %></td>
+            <td><%= cliente.email %></td>
+            <td>
+                <a href="/clientes/<%= cliente.id %>">Detalhes</a>
+                <a href="/clientes/<%= cliente.id %>/editar">Editar</a>
+            </td>
+        </tr>
+    <% }) %>
+
+</table>
+
+</body>
+</html>
