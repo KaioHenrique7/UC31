@@ -2,34 +2,292 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Veículos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clientes - Oficina</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #1769e0;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .topo h2 {
+            margin: 0;
+        }
+
+        .botoes {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-principal {
+            background: #1769e0;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background: #0d55bd;
+        }
+
+        .btn-voltar {
+            background: #555;
+            color: white;
+        }
+
+        .btn-detalhes {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-editar {
+            background: #f0ad00;
+            color: white;
+        }
+
+        .tabela-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #1769e0;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f7f9fc;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .vazio {
+            text-align: center;
+            padding: 50px 20px;
+            color: #777;
+        }
+
+        .vazio h3 {
+            color: #333;
+            font-size: 22px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        @media (max-width: 700px) {
+            .topo {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .botoes {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .botoes .btn {
+                text-align: center;
+            }
+
+            th,
+            td {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Veículos cadastrados</h1>
+<header>
+    <h1>👥 Sistema da Oficina</h1>
+    <p>Gerenciamento de clientes</p>
+</header>
 
-<a href="/veiculos/cadastrar">
-Novo veículo
-</a>
+<main class="container">
 
-<hr>
+    <div class="topo">
 
-<% veiculos.forEach(veiculo => { %>
+        <h2>Clientes cadastrados</h2>
 
-<p>
-Modelo: <%= veiculo.modelo %><br>
-Placa: <%= veiculo.placa %><br>
-</p>
+        <div class="botoes">
+            <a href="/" class="btn btn-voltar">
+                ← Início
+            </a>
 
-<hr>
+            <a href="/clientes/cadastrar" class="btn btn-principal">
+                + Novo cliente
+            </a>
+        </div>
 
-<% }) %>
+    </div>
 
+    <% if (clientes.length === 0) { %>
 
-<a href="/">
-Voltar
-</a>
+        <div class="tabela-container">
+
+            <div class="vazio">
+
+                <h3>👤 Nenhum cliente cadastrado</h3>
+
+                <p>
+                    Comece cadastrando o primeiro cliente.
+                </p>
+
+                <a href="/clientes/cadastrar" class="btn btn-principal">
+                    Cadastrar cliente
+                </a>
+
+            </div>
+
+        </div>
+
+    <% } else { %>
+
+        <div class="tabela-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <% clientes.forEach(cliente => { %>
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    <%= cliente.id %>
+                                </strong>
+                            </td>
+
+                            <td>
+                                <strong>
+                                    <%= cliente.nome %>
+                                </strong>
+                            </td>
+
+                            <td>
+                                <%= cliente.cpf || "Não informado" %>
+                            </td>
+
+                            <td>
+                                <%= cliente.telefone || "Não informado" %>
+                            </td>
+
+                            <td>
+
+                                <div class="acoes">
+
+                                    <a
+                                        href="/clientes/<%= cliente.id %>"
+                                        class="btn btn-detalhes">
+                                        Detalhes
+                                    </a>
+
+                                    <a
+                                        href="/clientes/<%= cliente.id %>/editar"
+                                        class="btn btn-editar">
+                                        Editar
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    <% } %>
+
+</main>
+
+<footer>
+    Sistema de gerenciamento de oficina
+</footer>
 
 </body>
 </html>
