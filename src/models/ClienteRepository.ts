@@ -1,49 +1,139 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
-import { Cliente } from "../entities/Cliente";
 
 export class ClienteRepository {
-  private caminho = path.join(__dirname, "../../dados/clientes.json");
 
-  private ler(): Cliente[] {
-    if (!fs.existsSync(this.caminho)) {
-      fs.writeFileSync(this.caminho, "[]");
+    private arquivo = path.join(
+        __dirname,
+        "../../dados/clientes.json"
+    );
+
+
+    private async ler(){
+
+        const dados = await fs.readFile(
+            this.arquivo,
+            "utf-8"
+        );
+
+
+        if(!dados.trim()){
+            return [];
+        }
+
+
+        return JSON.parse(dados);
+
     }
 
-    return JSON.parse(fs.readFileSync(this.caminho, "utf8"));
-  }
 
-  private salvar(clientes: Cliente[]): void {
-    fs.writeFileSync(this.caminho, JSON.stringify(clientes, null, 2));
-  }
 
-  listar(): Cliente[] {
-    return this.ler();
-  }
+    private async salvar(clientes:any[]){
 
-  buscarPorId(id: string): Cliente | undefined {
-    return this.ler().find(c => c.id === id);
-  }
+        await fs.writeFile(
+            this.arquivo,
+            JSON.stringify(clientes,null,2)
+        );
 
-  criar(cliente: Cliente): void {
-    const clientes = this.ler();
-    clientes.push(cliente);
-    this.salvar(clientes);
-  }
-
-  atualizar(p0: string, cliente: Cliente): void {
-    const clientes = this.ler();
-
-    const index = clientes.findIndex(c => c.id === cliente.id);
-
-    if (index !== -1) {
-      clientes[index] = cliente;
-      this.salvar(clientes);
     }
-  }
 
-  remover(id: string): void {
-    const clientes = this.ler().filter(c => c.id !== id);
-    this.salvar(clientes);
-  }
+
+
+    async listar(){
+
+        return await this.ler();
+
+    }
+
+
+
+    async buscarPorId(id:string){
+
+        const clientes = await this.ler();
+
+        return clientes.find(
+            (cliente:any)=>cliente.id === id
+        );
+
+    }
+
+
+
+    async criar(cliente:any){
+
+        const clientes = await this.ler();
+
+
+        const novoCliente = {
+
+            id: Date.now().toString(),
+
+            ...cliente
+
+        };
+
+
+        clientes.push(novoCliente);
+
+
+        await this.salvar(clientes);
+
+
+        return novoCliente;
+
+    }
+
+
+
+    async atualizar(id:string, dados:any){
+
+        const clientes = await this.ler();
+
+
+        const index = clientes.findIndex(
+            (cliente:any)=>cliente.id === id
+        );
+
+
+        if(index === -1){
+
+            throw new Error(
+                "Cliente não encontrado"
+            );
+
+        }
+
+
+        clientes[index] = {
+
+            ...clientes[index],
+
+            ...dados
+
+        };
+
+
+        await this.salvar(clientes);
+
+
+        return clientes[index];
+
+    }
+
+
+
+    async remover(id:string){
+
+        const clientes = await this.ler();
+
+
+        const novosClientes = clientes.filter(
+            (cliente:any)=>cliente.id !== id
+        );
+
+
+        await this.salvar(novosClientes);
+
+    }
+
 }

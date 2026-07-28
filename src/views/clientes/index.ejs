@@ -2,37 +2,34 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Clientes</title>
+    <title>Veículos</title>
 </head>
+
 <body>
 
-<h1>Lista de Clientes</h1>
+<h1>Veículos cadastrados</h1>
 
-<a href="/clientes/novo">Novo Cliente</a>
+<a href="/veiculos/cadastrar">
+Novo veículo
+</a>
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Telefone</th>
-        <th>Email</th>
-        <th>Ações</th>
-    </tr>
+<hr>
 
-    <% clientes.forEach(cliente => { %>
-        <tr>
-            <td><%= cliente.id %></td>
-            <td><%= cliente.nome %></td>
-            <td><%= cliente.telefone %></td>
-            <td><%= cliente.email %></td>
-            <td>
-                <a href="/clientes/<%= cliente.id %>">Detalhes</a>
-                <a href="/clientes/<%= cliente.id %>/editar">Editar</a>
-            </td>
-        </tr>
-    <% }) %>
+<% veiculos.forEach(veiculo => { %>
 
-</table>
+<p>
+Modelo: <%= veiculo.modelo %><br>
+Placa: <%= veiculo.placa %><br>
+</p>
+
+<hr>
+
+<% }) %>
+
+
+<a href="/">
+Voltar
+</a>
 
 </body>
 </html>
