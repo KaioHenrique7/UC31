@@ -1,31 +1,216 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Novo Veículo</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Novo Veículo - Oficina</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #1769e0;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.08);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1769e0;
+        }
+
+        .botoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button,
+        a {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button {
+            background: #1769e0;
+            color: white;
+        }
+
+        button:hover {
+            background: #0d55bd;
+        }
+
+        .voltar {
+            background: #555;
+            color: white;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-<h1>Novo Veículo</h1>
+<header>
 
-<form action="/veiculos" method="POST">
+    <h1>🚗 Sistema da Oficina</h1>
 
-    <label>Marca</label><br>
-    <input type="text" name="marca"><br><br>
+    <p>Cadastrar novo veículo</p>
 
-    <label>Modelo</label><br>
-    <input type="text" name="modelo"><br><br>
+</header>
 
-    <label>Placa</label><br>
-    <input type="text" name="placa"><br><br>
+<main class="container">
 
-    <button type="submit">Salvar</button>
+    <div class="card">
 
-</form>
+        <h2>Novo Veículo</h2>
 
-<br>
+        <form
+            action="/veiculos"
+            method="POST"
+        >
 
-<a href="/veiculos">Voltar</a>
+            <label for="marca">
+                Marca
+            </label>
+
+            <input
+                id="marca"
+                type="text"
+                name="marca"
+                required
+            >
+
+            <label for="modelo">
+                Modelo
+            </label>
+
+            <input
+                id="modelo"
+                type="text"
+                name="modelo"
+                required
+            >
+
+            <label for="placa">
+                Placa
+            </label>
+
+            <input
+                id="placa"
+                type="text"
+                name="placa"
+                required
+            >
+
+            <label for="ano">
+                Ano
+            </label>
+
+            <input
+                id="ano"
+                type="number"
+                name="ano"
+                required
+            >
+
+            <label for="clienteId">
+                ID do Cliente
+            </label>
+
+            <input
+                id="clienteId"
+                type="text"
+                name="clienteId"
+                required
+            >
+
+            <label for="foto">
+                Foto
+            </label>
+
+            <input
+                id="foto"
+                type="text"
+                name="foto"
+                placeholder="Nome ou caminho da foto"
+            >
+
+            <div class="botoes">
+
+                <a
+                    href="/veiculos"
+                    class="voltar"
+                >
+                    ← Voltar
+                </a>
+
+                <button type="submit">
+                    Salvar veículo
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
 
 </body>
+
 </html>

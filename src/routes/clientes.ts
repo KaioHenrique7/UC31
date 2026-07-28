@@ -23,9 +23,8 @@ router.get("/", async (req, res) => {
 
 // Página de cadastro
 router.get("/cadastrar", (req, res) => {
-    res.render("clientes/cadastrar");
+    res.render("clientes/novo");
 });
-
 
 // Buscar cliente por ID
 router.get("/:id", async (req, res) => {

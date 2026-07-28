@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-
+import methodOverride from "method-override";
 
 import sessionconfing from "./confing/session";
 
@@ -11,6 +11,11 @@ import authRoutes from "./routes/auth";
 
 
 const app = express();
+
+
+// Method Override
+// Permite que formulários HTML utilizem PUT e DELETE
+app.use(methodOverride("_method"));
 
 
 // EJS
@@ -36,9 +41,6 @@ app.use(
 app.use(
     express.json()
 );
-
-
-
 
 
 // Sessão
@@ -89,7 +91,7 @@ app.use(
 
 // Página inicial
 
-app.get("/", (req,res)=>{
+app.get("/", (req, res) => {
 
     res.render("home");
 

@@ -3,18 +3,37 @@ import path from "path";
 import { OrdemServico } from "../entities/OrdemServiço";
 
 export class OrdemRepository {
-  private caminho = path.join(__dirname, "../../dados/ordens.json");
+
+  private caminho = path.join(
+    __dirname,
+    "../../dados/ordens.json"
+  );
 
   private ler(): OrdemServico[] {
+
     if (!fs.existsSync(this.caminho)) {
       fs.writeFileSync(this.caminho, "[]");
     }
 
-    return JSON.parse(fs.readFileSync(this.caminho, "utf8"));
+    const dados = fs.readFileSync(
+      this.caminho,
+      "utf8"
+    );
+
+    if (!dados.trim()) {
+      return [];
+    }
+
+    return JSON.parse(dados);
   }
 
   private salvar(ordens: OrdemServico[]): void {
-    fs.writeFileSync(this.caminho, JSON.stringify(ordens, null, 2));
+
+    fs.writeFileSync(
+      this.caminho,
+      JSON.stringify(ordens, null, 2)
+    );
+
   }
 
   listar(): OrdemServico[] {
@@ -22,29 +41,73 @@ export class OrdemRepository {
   }
 
   buscarPorId(id: string): OrdemServico | undefined {
-    return this.ler().find(o => o.id === id);
-    
+
+    return this.ler().find(
+      ordem => ordem.id === id
+    );
+
   }
 
-  criar(ordem: OrdemServico): void {
+  criar(
+    dados: Omit<OrdemServico, "id">
+  ): OrdemServico {
+
     const ordens = this.ler();
-    ordens.push(ordem);
+
+    const novaOrdem: OrdemServico = {
+
+      id: Date.now().toString(),
+
+      ...dados
+
+    };
+
+    ordens.push(novaOrdem);
+
     this.salvar(ordens);
+
+    return novaOrdem;
   }
 
-  atualizar(ordem: OrdemServico): void {
+  atualizar(
+    id: string,
+    dados: Partial<OrdemServico>
+  ): OrdemServico {
+
     const ordens = this.ler();
 
-    const index = ordens.findIndex(o => o.id === ordem.id);
+    const index = ordens.findIndex(
+      ordem => ordem.id === id
+    );
 
-    if (index !== -1) {
-      ordens[index] = ordem;
-      this.salvar(ordens);
+    if (index === -1) {
+      throw new Error(
+        "Ordem não encontrada"
+      );
     }
+
+    ordens[index] = {
+
+      ...ordens[index],
+
+      ...dados,
+
+      id
+
+    };
+
+    this.salvar(ordens);
+
+    return ordens[index];
   }
 
   remover(id: string): void {
-    const ordens = this.ler().filter(o => o.id !== id);
-    this.salvar(ordens);
+
+    const novasOrdens = this.ler().filter(
+      ordem => ordem.id !== id
+    );
+
+    this.salvar(novasOrdens);
   }
+
 }
