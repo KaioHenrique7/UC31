@@ -1,17 +1,23 @@
 import { Router } from "express";
 import { ClienteRepository } from "../models/ClienteRepository";
+import { VeiculoRepository } from "../models/VeiculoRepository";
 
 const router = Router();
 const repository = new ClienteRepository();
+const veiculoRepository = new VeiculoRepository;
 
 
 // Página com todos os clientes
 router.get("/", async (req, res) => {
+
     const clientes = await repository.listar();
+    const veiculos = await veiculoRepository.listar();
 
     res.render("clientes/index", {
-        clientes
+        clientes,
+        veiculos
     });
+
 });
 
 
