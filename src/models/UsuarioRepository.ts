@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { Usuario } from "../entities/Usuarios";
 
-export class UsuarioRepository {
+class UsuarioRepository {
   private caminho = path.join(__dirname, "../../dados/usuarios.json");
 
   private ler(): Usuario[] {
@@ -23,9 +23,8 @@ export class UsuarioRepository {
 
   buscarPorEmail(email: string): Usuario | undefined {
     return this.ler().find(u => u.email === email);
-  
   }
-  
+
   login(email: string, senha: string): Usuario | undefined {
     return this.ler().find(
       usuario => usuario.email === email && usuario.senha === senha
@@ -36,6 +35,7 @@ export class UsuarioRepository {
     const usuarios = this.ler();
     usuarios.push(usuario);
     this.salvar(usuarios);
-    
   }
 }
+
+export default new UsuarioRepository();
