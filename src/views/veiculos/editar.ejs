@@ -1,43 +1,154 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Editar Veículo</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 <body>
 
-<h1>Editar Veículo</h1>
+<header>
 
-<form action="/veiculos/<%= veiculo.id %>?_method=PUT" method="POST">
+    <h1>🚗 Sistema da Oficina</h1>
 
-    <label>Marca</label><br>
-    <input
-        type="text"
-        name="marca"
-        value="<%= veiculo.marca %>"
-    ><br><br>
+    <p>Editar veículo</p>
 
-    <label>Modelo</label><br>
-    <input
-        type="text"
-        name="modelo"
-        value="<%= veiculo.modelo %>"
-    ><br><br>
+</header>
 
-    <label>Placa</label><br>
-    <input
-        type="text"
-        name="placa"
-        value="<%= veiculo.placa %>"
-    ><br><br>
 
-    <button type="submit">Salvar</button>
+<main class="container">
 
-</form>
+    <div class="card">
 
-<br>
+        <h2>Editar Veículo</h2>
 
-<a href="/veiculos">Voltar</a>
+
+        <form
+            action="/veiculos/<%= veiculo.id %>?_method=PUT"
+            method="POST"
+        >
+
+
+            <div class="form-group">
+
+                <label for="marca">
+                    Marca
+                </label>
+
+                <input
+                    id="marca"
+                    type="text"
+                    name="marca"
+                    value="<%= veiculo.marca %>"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="modelo">
+                    Modelo
+                </label>
+
+                <input
+                    id="modelo"
+                    type="text"
+                    name="modelo"
+                    value="<%= veiculo.modelo %>"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="placa">
+                    Placa
+                </label>
+
+                <input
+                    id="placa"
+                    type="text"
+                    name="placa"
+                    value="<%= veiculo.placa %>"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="ano">
+                    Ano
+                </label>
+
+                <input
+                    id="ano"
+                    type="number"
+                    name="ano"
+                    value="<%= veiculo.ano || '' %>"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="clienteId">
+                    ID do Cliente
+                </label>
+
+                <input
+                    id="clienteId"
+                    type="text"
+                    name="clienteId"
+                    value="<%= veiculo.clienteId || '' %>"
+                >
+
+            </div>
+
+
+            <div class="botoes">
+
+                <a
+                    href="/veiculos"
+                    class="btn btn-secondary"
+                >
+                    ← Voltar
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Salvar alterações
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</main>
 
 </body>
+
 </html>

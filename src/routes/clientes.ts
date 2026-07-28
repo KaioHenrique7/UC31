@@ -1,105 +1,223 @@
 import { Router } from "express";
 import { ClienteRepository } from "../models/ClienteRepository";
-import { VeiculoRepository } from "../models/VeiculoRepository";
 
 const router = Router();
+
 const repository = new ClienteRepository();
-const veiculoRepository = new VeiculoRepository;
 
 
-// Página com todos os clientes
+// =====================================================
+// LISTAR CLIENTES
+// GET /clientes
+// =====================================================
+
 router.get("/", async (req, res) => {
 
-    const clientes = await repository.listar();
-    const veiculos = await veiculoRepository.listar();
+    try {
 
-    res.render("clientes/index", {
-        clientes,
-        veiculos
-    });
+        const clientes = await repository.listar();
 
-});
-
-
-// Página de cadastro
-router.get("/cadastrar", (req, res) => {
-    res.render("clientes/novo");
-});
-
-// Buscar cliente por ID
-router.get("/:id", async (req, res) => {
-
-    const cliente = await repository.buscarPorId(req.params.id);
-
-    if (!cliente) {
-        return res.status(404).json({
-            mensagem: "Cliente não encontrado"
+        res.render("clientes/index", {
+            clientes
         });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao carregar clientes."
+        );
+
     }
 
-    res.json(cliente);
 });
 
 
-// Criar cliente
+// =====================================================
+// PÁGINA DE CADASTRO
+// GET /clientes/cadastrar
+// =====================================================
+
+router.get("/cadastrar", (req, res) => {
+
+    res.render("clientes/novo");
+
+});
+
+
+// =====================================================
+// PÁGINA DE EDIÇÃO
+// GET /clientes/:id/editar
+// =====================================================
+
+router.get("/:id/editar", async (req, res) => {
+
+    try {
+
+        const cliente = await repository.buscarPorId(
+            req.params.id
+        );
+
+        if (!cliente) {
+
+            return res.status(404).send(
+                "Cliente não encontrado."
+            );
+
+        }
+
+        res.render("clientes/editar", {
+            cliente
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao carregar cliente."
+        );
+
+    }
+
+});
+
+
+// =====================================================
+// DETALHES DO CLIENTE
+// GET /clientes/:id
+// =====================================================
+
+router.get("/:id", async (req, res) => {
+
+    try {
+
+        const cliente = await repository.buscarPorId(
+            req.params.id
+        );
+
+        if (!cliente) {
+
+            return res.status(404).send(
+                "Cliente não encontrado."
+            );
+
+        }
+
+        res.render("clientes/detalhes", {
+            cliente
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao buscar cliente."
+        );
+
+    }
+
+});
+
+
+// =====================================================
+// CADASTRAR CLIENTE
+// POST /clientes
+// =====================================================
+
 router.post("/", async (req, res) => {
 
     try {
 
-        await repository.criar(req.body);
+        await repository.criar({
+
+            nome: req.body.nome,
+
+            telefone: req.body.telefone,
+
+            email: req.body.email
+
+        });
 
         res.redirect("/clientes");
 
     } catch (error) {
 
-        res.status(500).json({
-            mensagem: "Erro ao cadastrar cliente"
-        });
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao cadastrar cliente."
+        );
 
     }
 
 });
 
 
-// Atualizar cliente
+// =====================================================
+// ATUALIZAR CLIENTE
+// PUT /clientes/:id
+// =====================================================
+
 router.put("/:id", async (req, res) => {
 
     try {
 
-        const cliente = await repository.atualizar(
+        await repository.atualizar(
+
             req.params.id,
-            req.body
+
+            {
+
+                nome: req.body.nome,
+
+                telefone: req.body.telefone,
+
+                email: req.body.email
+
+            }
+
         );
 
-        res.json(cliente);
+        res.redirect("/clientes");
 
+    } catch (error) {
 
-    } catch(error){
+        console.error(error);
 
-        res.status(500).json({
-            mensagem:"Erro ao atualizar cliente"
-        });
+        res.status(500).send(
+            "Erro ao atualizar cliente."
+        );
 
     }
 
 });
 
 
-// Excluir cliente
-router.delete("/:id", async (req, res)=>{
+// =====================================================
+// EXCLUIR CLIENTE
+// DELETE /clientes/:id
+// =====================================================
+
+router.delete("/:id", async (req, res) => {
 
     try {
 
-        await repository.remover(req.params.id);
+        await repository.remover(
+            req.params.id
+        );
 
-        res.sendStatus(204);
+        res.redirect("/clientes");
 
+    } catch (error) {
 
-    } catch(error){
+        console.error(error);
 
-        res.status(500).json({
-            mensagem:"Erro ao remover cliente"
-        });
+        res.status(500).send(
+            "Erro ao excluir cliente."
+        );
 
     }
 
