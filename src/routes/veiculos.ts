@@ -4,27 +4,55 @@ import { VeiculoRepository } from "../models/VeiculoRepository";
 const router = Router();
 const repository = new VeiculoRepository();
 
-router.get("/", async (req, res) => {
+// Lista os veículos
+router.get("/", (req, res) => {
     const veiculos = repository.listar();
-    res.json(veiculos);
+
+    res.render("veiculos/index", {
+        veiculos
+    });
 });
 
-router.get("/:id", async (req, res) => {
+// Formulário de novo veículo
+router.get("/novo", (req, res) => {
+    res.render("veiculos/novo");
+});
+
+// Formulário de edição
+router.get("/:id/editar", (req, res) => {
     const veiculo = repository.buscarPorId(req.params.id);
 
     if (!veiculo) {
-        return res.status(404).json({ mensagem: "Veículo não encontrado." });
+        return res.status(404).send("Veículo não encontrado.");
     }
 
-    res.json(veiculo);
+    res.render("veiculos/editar", {
+        veiculo
+    });
 });
 
-router.post("/", async (req, res) => {
+// Detalhes
+router.get("/:id", (req, res) => {
+    const veiculo = repository.buscarPorId(req.params.id);
+
+    if (!veiculo) {
+        return res.status(404).send("Veículo não encontrado.");
+    }
+
+    res.render("veiculos/detalhes", {
+        veiculo
+    });
+});
+
+// Criar
+router.post("/", (req, res) => {
     repository.criar(req.body);
-    res.status(201).json(req.body);
+
+    res.redirect("/veiculos");
 });
 
-router.put("/:id", async (req, res) => {
+// Atualizar
+router.put("/:id", (req, res) => {
     const veiculoAtualizado = {
         ...req.body,
         id: req.params.id
@@ -32,11 +60,13 @@ router.put("/:id", async (req, res) => {
 
     repository.atualizar(veiculoAtualizado);
 
-    res.json(veiculoAtualizado);
+    res.redirect("/veiculos");
 });
 
-router.delete("/:id", async (req, res) => {
+// Excluir
+router.delete("/:id", (req, res) => {
     repository.remover(req.params.id);
+
     res.sendStatus(204);
 });
 

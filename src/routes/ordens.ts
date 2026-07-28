@@ -4,27 +4,55 @@ import { OrdemRepository } from "../models/OrdemRepository";
 const router = Router();
 const repository = new OrdemRepository();
 
-router.get("/", async (req, res) => {
+// Lista as ordens
+router.get("/", (req, res) => {
     const ordens = repository.listar();
-    res.json(ordens);
+
+    res.render("ordens/index", {
+        ordens
+    });
 });
 
-router.get("/:id", async (req, res) => {
+// Formulário de nova ordem
+router.get("/novo", (req, res) => {
+    res.render("ordens/novo");
+});
+
+// Formulário de edição
+router.get("/:id/editar", (req, res) => {
     const ordem = repository.buscarPorId(req.params.id);
 
     if (!ordem) {
-        return res.status(404).json({ mensagem: "Ordem não encontrada." });
+        return res.status(404).send("Ordem não encontrada.");
     }
 
-    res.json(ordem);
+    res.render("ordens/editar", {
+        ordem
+    });
 });
 
-router.post("/", async (req, res) => {
+// Detalhes
+router.get("/:id", (req, res) => {
+    const ordem = repository.buscarPorId(req.params.id);
+
+    if (!ordem) {
+        return res.status(404).send("Ordem não encontrada.");
+    }
+
+    res.render("ordens/detalhes", {
+        ordem
+    });
+});
+
+// Criar
+router.post("/", (req, res) => {
     repository.criar(req.body);
-    res.status(201).json(req.body);
+
+    res.redirect("/ordens");
 });
 
-router.put("/:id", async (req, res) => {
+// Atualizar
+router.put("/:id", (req, res) => {
     const ordemAtualizada = {
         ...req.body,
         id: req.params.id
@@ -32,11 +60,13 @@ router.put("/:id", async (req, res) => {
 
     repository.atualizar(ordemAtualizada);
 
-    res.json(ordemAtualizada);
+    res.redirect("/ordens");
 });
 
-router.delete("/:id", async (req, res) => {
+// Excluir
+router.delete("/:id", (req, res) => {
     repository.remover(req.params.id);
+
     res.sendStatus(204);
 });
 
