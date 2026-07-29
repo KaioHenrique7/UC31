@@ -1,28 +1,213 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Nova Ordem</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Nova Ordem - Oficina</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #1769e0;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.08);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .botoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button,
+        a {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button {
+            background: #1769e0;
+            color: white;
+        }
+
+        button:hover {
+            background: #0d55bd;
+        }
+
+        .voltar {
+            background: #555;
+            color: white;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-<h1>Nova Ordem de Serviço</h1>
+<header>
 
-<form action="/ordens" method="POST">
+    <h1>🔧 Sistema da Oficina</h1>
 
-    <label>Descrição</label><br>
-    <input type="text" name="descricao"><br><br>
+    <p>Cadastrar ordem de serviço</p>
 
-    <label>Status</label><br>
-    <input type="text" name="status"><br><br>
+</header>
 
-    <button type="submit">Salvar</button>
+<main class="container">
 
-</form>
+    <div class="card">
 
-<br>
+        <h2>Nova Ordem de Serviço</h2>
 
-<a href="/ordens">Voltar</a>
+        <form
+            action="/ordens"
+            method="POST"
+        >
+
+            <label for="veiculo">
+                Veículo
+            </label>
+
+            <input
+                id="veiculo"
+                type="text"
+                name="veiculo"
+                placeholder="ID ou identificação do veículo"
+                required
+            >
+
+            <label for="descricao">
+                Descrição do serviço
+            </label>
+
+            <textarea
+                id="descricao"
+                name="descricao"
+                placeholder="Descreva o serviço que será realizado..."
+                required
+            ></textarea>
+
+            <label for="valor">
+                Valor
+            </label>
+
+            <input
+                id="valor"
+                type="number"
+                name="valor"
+                step="0.01"
+                min="0"
+                placeholder="0,00"
+                required
+            >
+
+            <label for="status">
+                Status
+            </label>
+
+            <select
+                id="status"
+                name="status"
+                required
+            >
+
+                <option value="Aberta">
+                    Aberta
+                </option>
+
+                <option value="Em andamento">
+                    Em andamento
+                </option>
+
+                <option value="Finalizada">
+                    Finalizada
+                </option>
+
+            </select>
+
+            <div class="botoes">
+
+                <a
+                    href="/ordens"
+                    class="voltar"
+                >
+                    ← Voltar
+                </a>
+
+                <button type="submit">
+                    Salvar ordem
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
 
 </body>
-</html>
+
+</html>mw

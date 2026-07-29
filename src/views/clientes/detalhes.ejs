@@ -1,22 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Detalhes do Cliente</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #1769e0;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.08);
+        }
+
+        .campo {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .campo strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .botoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        a {
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .editar {
+            background: #1769e0;
+            color: white;
+        }
+
+        .voltar {
+            background: #555;
+            color: white;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-    <h1>Detalhes do Cliente</h1>
+<header>
 
-    <p><strong>ID:</strong> <%= cliente.id %></p>
+    <h1> Cliente</h1>
 
-    <p><strong>Nome:</strong> <%= cliente.nome %></p>
+    <p>Detalhes do cliente</p>
 
-    <p><strong>Email:</strong> <%= cliente.email %></p>
+</header>
 
-    <p><strong>Telefone:</strong> <%= cliente.telefone %></p>
+<main class="container">
 
-    <a href="/clientes">Voltar</a>
+    <div class="card">
+
+        <h2>Informações do Cliente</h2>
+
+        <div class="campo">
+
+            <strong>ID</strong>
+
+            <%= cliente.id %>
+
+        </div>
+
+        <div class="campo">
+
+            <strong>Nome</strong>
+
+            <%= cliente.nome %>
+
+        </div>
+
+        <div class="campo">
+
+            <strong>Telefone</strong>
+
+            <%= cliente.telefone %>
+
+        </div>
+
+        <div class="campo">
+
+            <strong>Email</strong>
+
+            <%= cliente.email %>
+
+        </div>
+
+        <div class="botoes">
+
+            <a
+                class="voltar"
+                href="/clientes"
+            >
+                ← Voltar
+            </a>
+
+            <a
+                class="editar"
+                href="/clientes/<%= cliente.id %>/editar"
+            >
+                 Editar
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
 
 </body>
+
 </html>

@@ -4,40 +4,233 @@ import { VeiculoRepository } from "../models/VeiculoRepository";
 const router = Router();
 const repository = new VeiculoRepository();
 
+
+// =====================================================
+// LISTAR VEÍCULOS
+// GET /veiculos
+// =====================================================
+
 router.get("/", async (req, res) => {
-    const veiculos = repository.listar();
-    res.json(veiculos);
-});
 
-router.get("/:id", async (req, res) => {
-    const veiculo = repository.buscarPorId(req.params.id);
+    try {
 
-    if (!veiculo) {
-        return res.status(404).json({ mensagem: "Veículo não encontrado." });
+        const veiculos = await repository.listar();
+
+        res.render("veiculos/index", {
+            veiculos
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send("Erro ao carregar veículos.");
+
     }
 
-    res.json(veiculo);
 });
+
+
+// =====================================================
+// PÁGINA DE CADASTRO
+// GET /veiculos/cadastrar
+// =====================================================
+
+router.get("/cadastrar", (req, res) => {
+
+    res.render("veiculos/novo");
+
+});
+
+
+// =====================================================
+// DETALHES DO VEÍCULO
+// GET /veiculos/:id
+// =====================================================
+
+router.get("/:id", async (req, res) => {
+
+    try {
+
+        const veiculo = await repository.buscarPorId(
+            req.params.id
+        );
+
+        if (!veiculo) {
+
+            return res.status(404).send(
+                "Veículo não encontrado."
+            );
+
+        }
+
+        res.render("veiculos/detalhes", {
+            veiculo
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao buscar veículo."
+        );
+
+    }
+
+});
+
+
+// =====================================================
+// CADASTRAR VEÍCULO
+// POST /veiculos
+// =====================================================
 
 router.post("/", async (req, res) => {
-    repository.criar(req.body);
-    res.status(201).json(req.body);
+
+    try {
+
+        await repository.criar({
+
+            placa: req.body.placa,
+
+            modelo: req.body.modelo,
+
+            marca: req.body.marca,
+
+            ano: Number(req.body.ano),
+
+            clienteId: req.body.clienteId,
+
+            foto: req.body.foto || ""
+
+        });
+
+        res.redirect("/veiculos");
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao cadastrar veículo."
+        );
+
+    }
+
 });
+
+
+// =====================================================
+// PÁGINA DE EDIÇÃO
+// GET /veiculos/:id/editar
+// =====================================================
+
+router.get("/:id/editar", async (req, res) => {
+
+    try {
+
+        const veiculo = await repository.buscarPorId(
+            req.params.id
+        );
+
+        if (!veiculo) {
+
+            return res.status(404).send(
+                "Veículo não encontrado."
+            );
+
+        }
+
+        res.render("veiculos/editar", {
+            veiculo
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao carregar edição do veículo."
+        );
+
+    }
+
+});
+
+
+// =====================================================
+// ATUALIZAR VEÍCULO
+// PUT /veiculos/:id
+// =====================================================
 
 router.put("/:id", async (req, res) => {
-    const veiculoAtualizado = {
-        ...req.body,
-        id: req.params.id
-    };
 
-    repository.atualizar(veiculoAtualizado);
+    try {
 
-    res.json(veiculoAtualizado);
+        await repository.atualizar(
+
+            req.params.id,
+
+            {
+
+                placa: req.body.placa,
+
+                modelo: req.body.modelo,
+
+                marca: req.body.marca,
+
+                ano: Number(req.body.ano),
+
+                clienteId: req.body.clienteId,
+
+                foto: req.body.foto || ""
+
+            }
+
+        );
+
+        res.redirect("/veiculos");
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao atualizar veículo."
+        );
+
+    }
+
 });
+
+
+// =====================================================
+// EXCLUIR VEÍCULO
+// DELETE /veiculos/:id
+// =====================================================
 
 router.delete("/:id", async (req, res) => {
-    repository.remover(req.params.id);
-    res.sendStatus(204);
+
+    try {
+
+        await repository.remover(
+            req.params.id
+        );
+
+        res.redirect("/veiculos");
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).send(
+            "Erro ao excluir veículo."
+        );
+
+    }
+
 });
+
 
 export default router;

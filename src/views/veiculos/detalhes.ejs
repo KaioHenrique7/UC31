@@ -1,24 +1,128 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Detalhes do Veículo</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 <body>
 
-<h1>Detalhes do Veículo</h1>
+<header>
 
-<p><strong>ID:</strong> <%= veiculo.id %></p>
+    <h1> Sistema da Oficina</h1>
 
-<p><strong>Marca:</strong> <%= veiculo.marca %></p>
+    <p>Detalhes do veículo</p>
 
-<p><strong>Modelo:</strong> <%= veiculo.modelo %></p>
+</header>
 
-<p><strong>Placa:</strong> <%= veiculo.placa %></p>
 
-<br>
+<main class="container">
 
-<a href="/veiculos">Voltar</a>
+    <div class="card">
+
+        <h2>Informações do Veículo</h2>
+
+
+        <div class="detalhe">
+
+            <strong>ID</strong>
+
+            <span>
+                <%= veiculo.id %>
+            </span>
+
+        </div>
+
+
+        <div class="detalhe">
+
+            <strong>Marca</strong>
+
+            <span>
+                <%= veiculo.marca %>
+            </span>
+
+        </div>
+
+
+        <div class="detalhe">
+
+            <strong>Modelo</strong>
+
+            <span>
+                <%= veiculo.modelo %>
+            </span>
+
+        </div>
+
+
+        <div class="detalhe">
+
+            <strong>Placa</strong>
+
+            <span>
+                <%= veiculo.placa %>
+            </span>
+
+        </div>
+
+
+        <div class="detalhe">
+
+            <strong>Ano</strong>
+
+            <span>
+                <%= veiculo.ano || "Não informado" %>
+            </span>
+
+        </div>
+
+
+        <div class="detalhe">
+
+            <strong>Cliente</strong>
+
+            <span>
+                <%= veiculo.clienteId || "Não informado" %>
+            </span>
+
+        </div>
+
+
+        <div class="botoes">
+
+            <a
+                href="/veiculos"
+                class="btn btn-secondary"
+            >
+                ← Voltar
+            </a>
+
+
+            <a
+                href="/veiculos/<%= veiculo.id %>/editar"
+                class="btn btn-warning"
+            >
+                 Editar
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
 
 </body>
+
 </html>

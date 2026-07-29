@@ -1,13 +1,11 @@
 import { Router } from "express";
-import { UsuarioRepository } from "../models/UsuarioRepository";
+import UsuarioRepository from "../models/UsuarioRepository";
 
 const router = Router();
-const repository = new UsuarioRepository();
-
 router.post("/login", async (req, res) => {
     const { email, senha } = req.body;
 
-    const usuario = await repository.login(email, senha);
+    const usuario = UsuarioRepository.login(email, senha);
 
     if (!usuario) {
         return res.status(401).json({
