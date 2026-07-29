@@ -9,60 +9,53 @@ export class ClienteRepository {
     );
 
 
-    private async ler(){
+    private async ler() {
 
         const dados = await fs.readFile(
             this.arquivo,
             "utf-8"
         );
 
-
-        if(!dados.trim()){
+        if (!dados.trim()) {
             return [];
         }
-
 
         return JSON.parse(dados);
 
     }
 
 
-
-    private async salvar(clientes:any[]){
+    private async salvar(clientes: any[]) {
 
         await fs.writeFile(
             this.arquivo,
-            JSON.stringify(clientes,null,2)
+            JSON.stringify(clientes, null, 2)
         );
 
     }
 
 
-
-    async listar(){
+    async listar() {
 
         return await this.ler();
 
     }
 
 
-
-    async buscarPorId(id:string){
+    async buscarPorId(id: string) {
 
         const clientes = await this.ler();
 
         return clientes.find(
-            (cliente:any)=>cliente.id === id
+            (cliente: any) => cliente.id === id
         );
 
     }
 
 
-
-    async criar(cliente:any){
+    async criar(cliente: any) {
 
         const clientes = await this.ler();
-
 
         const novoCliente = {
 
@@ -72,37 +65,30 @@ export class ClienteRepository {
 
         };
 
-
         clientes.push(novoCliente);
 
-
         await this.salvar(clientes);
-
 
         return novoCliente;
 
     }
 
 
-
-    async atualizar(id:string, dados:any){
+    async atualizar(id: string, dados: any) {
 
         const clientes = await this.ler();
 
-
         const index = clientes.findIndex(
-            (cliente:any)=>cliente.id === id
+            (cliente: any) => cliente.id === id
         );
 
-
-        if(index === -1){
+        if (index === -1) {
 
             throw new Error(
                 "Cliente não encontrado"
             );
 
         }
-
 
         clientes[index] = {
 
@@ -112,25 +98,20 @@ export class ClienteRepository {
 
         };
 
-
         await this.salvar(clientes);
-
 
         return clientes[index];
 
     }
 
 
-
-    async remover(id:string){
+    async remover(id: string) {
 
         const clientes = await this.ler();
 
-
         const novosClientes = clientes.filter(
-            (cliente:any)=>cliente.id !== id
+            (cliente: any) => cliente.id !== id
         );
-
 
         await this.salvar(novosClientes);
 

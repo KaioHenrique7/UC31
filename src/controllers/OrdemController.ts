@@ -25,7 +25,10 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-    const ordem = await repository.atualizar(req.body);
+  const ordem = await repository.atualizar(
+    req.params.id,
+    req.body
+);
     res.json(ordem);
 });
 

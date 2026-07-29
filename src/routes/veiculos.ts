@@ -2,59 +2,66 @@ import { Router } from "express";
 import { VeiculoRepository } from "../models/VeiculoRepository";
 
 const router = Router();
+
 const repository = new VeiculoRepository();
 
 
-// =====================================================
+// ==========================================
 // LISTAR VEÍCULOS
-// GET /veiculos
-// =====================================================
+// ==========================================
 
 router.get("/", async (req, res) => {
 
     try {
 
-        const veiculos = await repository.listar();
+        const veiculos =
+            await repository.listar();
 
-        res.render("veiculos/index", {
-            veiculos
-        });
+        res.render(
+            "veiculos/index",
+            {
+                veiculos
+            }
+        );
 
     } catch (error) {
 
         console.error(error);
 
-        res.status(500).send("Erro ao carregar veículos.");
+        res.status(500).send(
+            "Erro ao carregar veículos."
+        );
 
     }
 
 });
 
 
-// =====================================================
+// ==========================================
 // PÁGINA DE CADASTRO
-// GET /veiculos/cadastrar
-// =====================================================
+// ==========================================
 
 router.get("/cadastrar", (req, res) => {
 
-    res.render("veiculos/novo");
+    res.render(
+        "veiculos/novo"
+    );
 
 });
 
 
-// =====================================================
-// DETALHES DO VEÍCULO
-// GET /veiculos/:id
-// =====================================================
+// ==========================================
+// DETALHES
+// ==========================================
 
 router.get("/:id", async (req, res) => {
 
     try {
 
-        const veiculo = await repository.buscarPorId(
-            req.params.id
-        );
+        const veiculo =
+            await repository.buscarPorId(
+                req.params.id
+            );
 
         if (!veiculo) {
 
@@ -64,9 +71,12 @@ router.get("/:id", async (req, res) => {
 
         }
 
-        res.render("veiculos/detalhes", {
-            veiculo
-        });
+        res.render(
+            "veiculos/detalhes",
+            {
+                veiculo
+            }
+        );
 
     } catch (error) {
 
@@ -81,16 +91,17 @@ router.get("/:id", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // CADASTRAR VEÍCULO
-// POST /veiculos
-// =====================================================
+// ==========================================
 
 router.post("/", async (req, res) => {
 
     try {
 
         await repository.criar({
+
+            id: Date.now().toString(),
 
             placa: req.body.placa,
 
@@ -100,13 +111,15 @@ router.post("/", async (req, res) => {
 
             ano: Number(req.body.ano),
 
-            clienteId: req.body.clienteId,
+            clienteId: req.body.clienteId || "",
 
             foto: req.body.foto || ""
 
         });
 
-        res.redirect("/veiculos");
+        res.redirect(
+            "/veiculos"
+        );
 
     } catch (error) {
 
@@ -121,18 +134,18 @@ router.post("/", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // PÁGINA DE EDIÇÃO
-// GET /veiculos/:id/editar
-// =====================================================
+// ==========================================
 
 router.get("/:id/editar", async (req, res) => {
 
     try {
 
-        const veiculo = await repository.buscarPorId(
-            req.params.id
-        );
+        const veiculo =
+            await repository.buscarPorId(
+                req.params.id
+            );
 
         if (!veiculo) {
 
@@ -142,16 +155,19 @@ router.get("/:id/editar", async (req, res) => {
 
         }
 
-        res.render("veiculos/editar", {
-            veiculo
-        });
+        res.render(
+            "veiculos/editar",
+            {
+                veiculo
+            }
+        );
 
     } catch (error) {
 
         console.error(error);
 
         res.status(500).send(
-            "Erro ao carregar edição do veículo."
+            "Erro ao carregar veículo."
         );
 
     }
@@ -159,38 +175,50 @@ router.get("/:id/editar", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // ATUALIZAR VEÍCULO
-// PUT /veiculos/:id
-// =====================================================
+// ==========================================
 
 router.put("/:id", async (req, res) => {
 
     try {
 
-        await repository.atualizar(
+        const veiculo =
+            await repository.buscarPorId(
+                req.params.id
+            );
 
-            req.params.id,
+        if (!veiculo) {
 
-            {
+            return res.status(404).send(
+                "Veículo não encontrado."
+            );
 
-                placa: req.body.placa,
+        }
 
-                modelo: req.body.modelo,
+        await repository.atualizar({
 
-                marca: req.body.marca,
+            id: req.params.id,
 
-                ano: Number(req.body.ano),
+            placa: req.body.placa,
 
-                clienteId: req.body.clienteId,
+            modelo: req.body.modelo,
 
-                foto: req.body.foto || ""
+            marca: req.body.marca,
 
-            }
+            ano: Number(req.body.ano),
 
+            clienteId:
+                req.body.clienteId || "",
+
+            foto:
+                req.body.foto || ""
+
+        });
+
+        res.redirect(
+            "/veiculos"
         );
-
-        res.redirect("/veiculos");
 
     } catch (error) {
 
@@ -205,10 +233,9 @@ router.put("/:id", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // EXCLUIR VEÍCULO
-// DELETE /veiculos/:id
-// =====================================================
+// ==========================================
 
 router.delete("/:id", async (req, res) => {
 
@@ -218,7 +245,9 @@ router.delete("/:id", async (req, res) => {
             req.params.id
         );
 
-        res.redirect("/veiculos");
+        res.redirect(
+            "/veiculos"
+        );
 
     } catch (error) {
 

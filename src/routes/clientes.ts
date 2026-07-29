@@ -6,10 +6,9 @@ const router = Router();
 const repository = new ClienteRepository();
 
 
-// =====================================================
+// ==========================================
 // LISTAR CLIENTES
-// GET /clientes
-// =====================================================
+// ==========================================
 
 router.get("/", async (req, res) => {
 
@@ -17,9 +16,12 @@ router.get("/", async (req, res) => {
 
         const clientes = await repository.listar();
 
-        res.render("clientes/index", {
-            clientes
-        });
+        res.render(
+            "clientes/index",
+            {
+                clientes
+            }
+        );
 
     } catch (error) {
 
@@ -34,30 +36,31 @@ router.get("/", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // PÁGINA DE CADASTRO
-// GET /clientes/cadastrar
-// =====================================================
+// ==========================================
 
 router.get("/cadastrar", (req, res) => {
 
-    res.render("clientes/novo");
+    res.render(
+        "clientes/novo"
+    );
 
 });
 
 
-// =====================================================
+// ==========================================
 // PÁGINA DE EDIÇÃO
-// GET /clientes/:id/editar
-// =====================================================
+// ==========================================
 
 router.get("/:id/editar", async (req, res) => {
 
     try {
 
-        const cliente = await repository.buscarPorId(
-            req.params.id
-        );
+        const cliente =
+            await repository.buscarPorId(
+                req.params.id
+            );
 
         if (!cliente) {
 
@@ -67,9 +70,12 @@ router.get("/:id/editar", async (req, res) => {
 
         }
 
-        res.render("clientes/editar", {
-            cliente
-        });
+        res.render(
+            "clientes/editar",
+            {
+                cliente
+            }
+        );
 
     } catch (error) {
 
@@ -84,18 +90,18 @@ router.get("/:id/editar", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // DETALHES DO CLIENTE
-// GET /clientes/:id
-// =====================================================
+// ==========================================
 
 router.get("/:id", async (req, res) => {
 
     try {
 
-        const cliente = await repository.buscarPorId(
-            req.params.id
-        );
+        const cliente =
+            await repository.buscarPorId(
+                req.params.id
+            );
 
         if (!cliente) {
 
@@ -105,9 +111,12 @@ router.get("/:id", async (req, res) => {
 
         }
 
-        res.render("clientes/detalhes", {
-            cliente
-        });
+        res.render(
+            "clientes/detalhes",
+            {
+                cliente
+            }
+        );
 
     } catch (error) {
 
@@ -122,10 +131,9 @@ router.get("/:id", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // CADASTRAR CLIENTE
-// POST /clientes
-// =====================================================
+// ==========================================
 
 router.post("/", async (req, res) => {
 
@@ -141,7 +149,9 @@ router.post("/", async (req, res) => {
 
         });
 
-        res.redirect("/clientes");
+        res.redirect(
+            "/clientes"
+        );
 
     } catch (error) {
 
@@ -156,10 +166,9 @@ router.post("/", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // ATUALIZAR CLIENTE
-// PUT /clientes/:id
-// =====================================================
+// ==========================================
 
 router.put("/:id", async (req, res) => {
 
@@ -181,7 +190,9 @@ router.put("/:id", async (req, res) => {
 
         );
 
-        res.redirect("/clientes");
+        res.redirect(
+            "/clientes"
+        );
 
     } catch (error) {
 
@@ -196,10 +207,9 @@ router.put("/:id", async (req, res) => {
 });
 
 
-// =====================================================
+// ==========================================
 // EXCLUIR CLIENTE
-// DELETE /clientes/:id
-// =====================================================
+// ==========================================
 
 router.delete("/:id", async (req, res) => {
 
@@ -209,7 +219,9 @@ router.delete("/:id", async (req, res) => {
             req.params.id
         );
 
-        res.redirect("/clientes");
+        res.redirect(
+            "/clientes"
+        );
 
     } catch (error) {
 

@@ -13,12 +13,18 @@ import authRoutes from "./routes/auth";
 const app = express();
 
 
-// Method Override
-// Permite que formulários HTML utilizem PUT e DELETE
+// ==========================================
+// METHOD OVERRIDE
+// Permite PUT e DELETE pelos formulários HTML
+// ==========================================
+
 app.use(methodOverride("_method"));
 
 
+// ==========================================
 // EJS
+// ==========================================
+
 app.set(
     "view engine",
     "ejs"
@@ -30,30 +36,42 @@ app.set(
 );
 
 
-// Receber dados dos formulários
+// ==========================================
+// RECEBER DADOS DOS FORMULÁRIOS
+// ==========================================
+
 app.use(
     express.urlencoded({
         extended: true
     })
 );
 
-
 app.use(
     express.json()
 );
 
 
-// Sessão
+// ==========================================
+// SESSÃO
+// ==========================================
+
 app.use(sessionconfing);
 
 
-// Arquivos públicos
+// ==========================================
+// ARQUIVOS PÚBLICOS
+// ==========================================
+
 app.use(
     express.static(
         path.join(__dirname, "../public")
     )
 );
 
+
+// ==========================================
+// UPLOADS
+// ==========================================
 
 app.use(
     "/uploads",
@@ -63,25 +81,24 @@ app.use(
 );
 
 
-// Rotas
+// ==========================================
+// ROTAS
+// ==========================================
 
 app.use(
     "/clientes",
     clientesRoutes
 );
 
-
 app.use(
     "/veiculos",
     veiculosRoutes
 );
 
-
 app.use(
     "/ordens",
     ordensRoutes
 );
-
 
 app.use(
     "/auth",
@@ -89,7 +106,9 @@ app.use(
 );
 
 
-// Página inicial
+// ==========================================
+// PÁGINA INICIAL
+// ==========================================
 
 app.get("/", (req, res) => {
 

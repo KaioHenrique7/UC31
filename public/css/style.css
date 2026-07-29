@@ -1,179 +1,197 @@
-/* =========================================
+/* =========================================================
    RESET
-========================================= */
+   ========================================================= */
 
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
 body {
-    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6f9;
+    background: #f3f6fa;
     color: #1f2937;
+    min-height: 100vh;
 }
 
 
-/* =========================================
+/* =========================================================
    CABEÇALHO
-========================================= */
+   ========================================================= */
 
 header {
-    background: #1769e0;
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #1d4ed8
+    );
+
     color: white;
-    padding: 28px 20px;
+
+    padding: 35px 20px;
+
     text-align: center;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 header h1 {
-    margin: 0 0 8px;
+    font-size: 32px;
+    margin-bottom: 8px;
 }
 
 header p {
-    margin: 0;
+    font-size: 16px;
     opacity: 0.9;
 }
 
 
-/* =========================================
+/* =========================================================
    CONTAINER
-========================================= */
+   ========================================================= */
 
 .container {
     width: 90%;
-    max-width: 850px;
-    margin: 40px auto;
+    max-width: 1100px;
+
+    margin: 35px auto;
 }
 
 
-/* =========================================
-   CARD
-========================================= */
+/* =========================================================
+   CARDS
+   ========================================================= */
 
 .card {
     background: white;
-    padding: 30px;
+
     border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
+
+    border: 1px solid #e5e7eb;
 }
 
 .card h2 {
-    margin-top: 0;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
+
+    color: #111827;
 }
 
 
-/* =========================================
-   DETALHES
-========================================= */
+/* =========================================================
+   LISTAGEM / DETALHES
+   ========================================================= */
 
 .detalhe {
-    padding: 16px 0;
-    border-bottom: 1px solid #e5e7eb;
-}
+    background: #f8fafc;
 
-.detalhe:last-child {
-    border-bottom: none;
-}
+    border: 1px solid #e2e8f0;
 
-.detalhe strong {
-    display: block;
-    color: #6b7280;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
+    border-radius: 12px;
 
-.detalhe span {
-    font-size: 17px;
-}
+    padding: 20px;
 
+    margin-bottom: 18px;
 
-/* =========================================
-   FORMULÁRIOS
-========================================= */
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 7px;
-    font-weight: bold;
-    color: #374151;
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 15px;
-    background: white;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    border-color: #1769e0;
-    box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.12);
-}
-
-textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-
-/* =========================================
-   BOTÕES
-========================================= */
-
-.botoes {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 25px;
-}
-
-button,
-.btn {
-    display: inline-block;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
     transition: 0.2s;
 }
 
-.btn-primary,
-button[type="submit"] {
-    background: #1769e0;
+.detalhe:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.detalhe strong {
+    display: inline-block;
+
+    min-width: 100px;
+
+    color: #374151;
+}
+
+.detalhe span {
+    color: #111827;
+}
+
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+.botoes {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+    align-items: center;
+}
+
+.btn {
+    display: inline-block;
+
+    padding: 11px 17px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.2s,
+        opacity 0.2s,
+        background 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+
+    opacity: 0.9;
+}
+
+
+/* Azul */
+
+.btn-primary {
+    background: #2563eb;
+
     color: white;
 }
 
-.btn-primary:hover,
-button[type="submit"]:hover {
-    background: #0d55bd;
+.btn-primary:hover {
+    background: #1d4ed8;
 }
 
-.btn-secondary {
-    background: #6b7280;
-    color: white;
-}
 
-.btn-secondary:hover {
-    background: #4b5563;
-}
+/* Amarelo */
 
 .btn-warning {
     background: #f59e0b;
+
     color: white;
 }
 
@@ -181,8 +199,12 @@ button[type="submit"]:hover {
     background: #d97706;
 }
 
+
+/* Vermelho */
+
 .btn-danger {
     background: #dc2626;
+
     color: white;
 }
 
@@ -191,38 +213,471 @@ button[type="submit"]:hover {
 }
 
 
-/* =========================================
-   LINKS
-========================================= */
+/* Cinza */
 
-a {
-    color: #1769e0;
+.btn-secondary {
+    background: #6b7280;
+
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
 }
 
 
-/* =========================================
-   RESPONSIVO
-========================================= */
+/* Verde */
 
-@media (max-width: 600px) {
+.btn-success {
+    background: #16a34a;
+
+    color: white;
+}
+
+.btn-success:hover {
+    background: #15803d;
+}
+
+
+/* =========================================================
+   FORMULÁRIOS
+   ========================================================= */
+
+form {
+    width: 100%;
+}
+
+form label {
+    display: block;
+
+    margin-top: 15px;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
+
+    color: #374151;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    background: white;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border 0.2s,
+        box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+form button {
+    margin-top: 18px;
+}
+
+
+/* =========================================================
+   TABELAS
+   ========================================================= */
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background: white;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+thead {
+    background: #1e3a8a;
+
+    color: white;
+}
+
+th,
+td {
+    padding: 14px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    font-weight: bold;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+    color: #2563eb;
+
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   TÍTULOS
+   ========================================================= */
+
+h1 {
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   MENSAGENS
+   ========================================================= */
+
+.mensagem {
+    padding: 15px;
+
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    color: #1e40af;
+}
+
+.erro {
+    padding: 15px;
+
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    color: #991b1b;
+}
+
+.sucesso {
+    padding: 15px;
+
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+
+    background: #f0fdf4;
+
+    border: 1px solid #bbf7d0;
+
+    color: #166534;
+}
+
+
+/* =========================================================
+   IMAGENS / FOTOS
+   ========================================================= */
+
+img {
+    max-width: 100%;
+}
+
+.foto-veiculo {
+    width: 180px;
+
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid #e5e7eb;
+
+    margin-top: 10px;
+}
+
+
+/* =========================================================
+   PÁGINA DE DETALHES
+   ========================================================= */
+
+.detalhes-card {
+    max-width: 700px;
+
+    margin: 35px auto;
+}
+
+.detalhes-item {
+    padding: 14px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.detalhes-item:last-child {
+    border-bottom: none;
+}
+
+.detalhes-item strong {
+    display: block;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 5px;
+}
+
+.detalhes-item span {
+    font-size: 17px;
+
+    color: #111827;
+}
+
+
+/* =========================================================
+   PÁGINA DE LOGIN
+   ========================================================= */
+
+.login-container {
+    width: 90%;
+
+    max-width: 420px;
+
+    margin: 70px auto;
+}
+
+.login-container .card {
+    padding: 35px;
+}
+
+.login-container h1 {
+    text-align: center;
+
+    color: #111827;
+}
+
+
+/* =========================================================
+   HOME / PÁGINA INICIAL
+   ========================================================= */
+
+.home-container {
+    width: 90%;
+
+    max-width: 1100px;
+
+    margin: 40px auto;
+}
+
+.home-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 20px;
+
+    margin-top: 30px;
+}
+
+.home-card {
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
+
+    transition: 0.2s;
+}
+
+.home-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.home-card .icone {
+    font-size: 42px;
+
+    margin-bottom: 15px;
+}
+
+.home-card h2 {
+    margin-bottom: 10px;
+
+    color: #111827;
+}
+
+.home-card p {
+    color: #6b7280;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   STATUS DE ORDENS
+   ========================================================= */
+
+.status {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.status-aberta {
+    background: #dbeafe;
+
+    color: #1e40af;
+}
+
+.status-andamento {
+    background: #fef3c7;
+
+    color: #92400e;
+}
+
+.status-finalizada {
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+
+/* =========================================================
+   RODAPÉ
+   ========================================================= */
+
+footer {
+    margin-top: 50px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    header h1 {
+        font-size: 25px;
+    }
 
     .container {
         width: 94%;
-        margin: 25px auto;
+
+        margin-top: 20px;
     }
 
     .card {
-        padding: 20px;
+        padding: 18px;
     }
 
     .botoes {
         flex-direction: column;
+
+        align-items: stretch;
     }
 
-    .botoes a,
-    .botoes button {
-        width: 100%;
+    .btn {
         text-align: center;
+
+        width: 100%;
+    }
+
+    .botoes form {
+        width: 100%;
+    }
+
+    .botoes form .btn {
+        width: 100%;
+    }
+
+    table {
+        display: block;
+
+        overflow-x: auto;
+    }
+
+    th,
+    td {
+        white-space: nowrap;
     }
 
 }

@@ -2,283 +2,156 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Veículos - Oficina</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    <title>Veículos</title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            color: #222;
-        }
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
 
-        header {
-            background: #1769e0;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0 0 8px;
-        }
-
-        header p {
-            margin: 0;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 35px auto;
-        }
-
-        .topo {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            gap: 15px;
-        }
-
-        .topo h2 {
-            margin: 0;
-        }
-
-        .botoes {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 11px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .btn-principal {
-            background: #1769e0;
-            color: white;
-        }
-
-        .btn-principal:hover {
-            background: #0d55bd;
-        }
-
-        .btn-voltar {
-            background: #555;
-            color: white;
-        }
-
-        .btn-detalhes {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .btn-editar {
-            background: #f0ad00;
-            color: white;
-        }
-
-        .tabela-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #1769e0;
-            color: white;
-            padding: 15px;
-            text-align: left;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        tr:hover {
-            background: #f7f9fc;
-        }
-
-        .acoes {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .vazio {
-            text-align: center;
-            padding: 50px 20px;
-            color: #777;
-        }
-
-        .vazio h3 {
-            color: #333;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #777;
-        }
-
-        @media (max-width: 700px) {
-            .topo {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .botoes {
-                width: 100%;
-                flex-direction: column;
-            }
-
-            .botoes .btn {
-                text-align: center;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
 <header>
-    <h1> Sistema da Oficina</h1>
-    <p>Gerenciamento de veículos</p>
+
+    <h1> Veículos</h1>
+
+    <p>Veículos cadastrados na oficina</p>
+
 </header>
+
 
 <main class="container">
 
-    <div class="topo">
-
-        <h2>Veículos cadastrados</h2>
+    <div class="card">
 
         <div class="botoes">
 
-            <a href="/" class="btn btn-voltar">
+            <a
+                href="/"
+                class="btn btn-secondary"
+            >
                 ← Início
             </a>
 
-            <a href="/veiculos/cadastrar" class="btn btn-principal">
-                + Novo veículo
+            <a
+                href="/veiculos/cadastrar"
+                class="btn btn-primary"
+            >
+                 Novo Veículo
             </a>
 
         </div>
 
+        <br>
+
+
+        <% if (veiculos.length === 0) { %>
+
+            <p>
+                Nenhum veículo cadastrado.
+            </p>
+
+        <% } else { %>
+
+
+            <% veiculos.forEach(veiculo => { %>
+
+                <div class="detalhe">
+
+                    <strong>Marca</strong>
+
+                    <span>
+                        <%= veiculo.marca %>
+                    </span>
+
+
+                    <br>
+
+
+                    <strong>Modelo</strong>
+
+                    <span>
+                        <%= veiculo.modelo %>
+                    </span>
+
+
+                    <br>
+
+
+                    <strong>Placa</strong>
+
+                    <span>
+                        <%= veiculo.placa %>
+                    </span>
+
+
+                    <br>
+
+
+                    <strong>Ano</strong>
+
+                    <span>
+                        <%= veiculo.ano || "Não informado" %>
+                    </span>
+
+
+                    <div class="botoes">
+
+                        <a
+                            href="/veiculos/<%= veiculo.id %>"
+                            class="btn btn-primary"
+                        >
+                            Detalhes
+                        </a>
+
+
+                        <a
+                            href="/veiculos/<%= veiculo.id %>/editar"
+                            class="btn btn-warning"
+                        >
+                             Editar
+                        </a>
+
+
+                        <form
+                            action="/veiculos/<%= veiculo.id %>?_method=DELETE"
+                            method="POST"
+                            style="display: inline;"
+                            onsubmit="return confirm('Tem certeza que deseja excluir este veículo?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger"
+                            >
+                                 Excluir
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+
+        <% } %>
+
     </div>
-
-    <% if (veiculos.length === 0) { %>
-
-        <div class="tabela-container">
-
-            <div class="vazio">
-
-                <h3> Nenhum veículo cadastrado</h3>
-
-                <p>Comece cadastrando o primeiro veículo.</p>
-
-                <a href="/veiculos/cadastrar" class="btn btn-principal">
-                    Cadastrar veículo
-                </a>
-
-            </div>
-
-        </div>
-
-    <% } else { %>
-
-        <div class="tabela-container">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Placa</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <% veiculos.forEach(veiculo => { %>
-
-                        <tr>
-
-                            <td>
-                                <strong><%= veiculo.id %></strong>
-                            </td>
-
-                            <td>
-                                <%= veiculo.marca || "Não informado" %>
-                            </td>
-
-                            <td>
-                                <%= veiculo.modelo || "Não informado" %>
-                            </td>
-
-                            <td>
-                                <%= veiculo.placa || "Não informado" %>
-                            </td>
-
-                            <td>
-
-                                <div class="acoes">
-
-                                    <a
-                                        href="/veiculos/<%= veiculo.id %>"
-                                        class="btn btn-detalhes">
-                                        Detalhes
-                                    </a>
-
-                                    <a
-                                        href="/veiculos/<%= veiculo.id %>/editar"
-                                        class="btn btn-editar">
-                                        Editar
-                                    </a>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    <% }) %>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    <% } %>
 
 </main>
 
-<footer>
-    Sistema de gerenciamento de oficina
-</footer>
-
 </body>
+
 </html>
