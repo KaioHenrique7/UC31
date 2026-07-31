@@ -1,63 +1,23 @@
-import { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import UsuarioRepository from "../models/UsuarioRepository";
+import { Router } from "express";
+import repository from "../models/UsuarioRepository";
 
-export default class AuthController {
+const router = Router();
 
-    static login(req: Request, res: Response) {
-        res.render("login");
-    }
+router.post("/login", (req, res) => {
+    const { email, senha } = req.body;
 
-    static registro(req: Request, res: Response) {
-        res.render("registro");
-    }
+    const usuario = repository.login(email, senha);
 
-    static async cadastrar(req: Request, res: Response) {
-
-        const { nome, email, senha } = req.body;
-
-        const hash = await bcrypt.hash(senha, 10);
-
-        UsuarioRepository.criar({
-            nome,
-            email,
-            senha: hash,
-            id: ""
+    if (!usuario) {
+        return res.status(401).json({
+            mensagem: "E-mail ou senha inválidos."
         });
-
-        res.redirect("/auth/login");
     }
 
-    static async autenticar(req: Request, res: Response) {
+    return res.json({
+        mensagem: "Login realizado com sucesso.",
+        usuario
+    });
+});
 
-        const { email, senha } = req.body;
-
-        const usuario = await UsuarioRepository.buscarPorEmail(email);
-
-        if (!usuario) {
-            return res.render("login", {
-                erro: "Usuário não encontrado"
-            });
-        }
-
-        const ok = await bcrypt.compare(senha, usuario.senha);
-
-        if (!ok) {
-            return res.render("login", {
-                erro: "Senha incorreta"
-            });
-        }
-
-        (req as any).usuario = usuario;
-
-        res.redirect("/");
-    }
-
-    static logout(req: Request, res: Response) {
-
-        (req as any).session.destroy(() => {
-            res.redirect("/auth/login");
-        });
-
-    }
-}
+export default router;
