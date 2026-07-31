@@ -92,7 +92,7 @@ UC31
 Clone o repositório
 
 ```bash
-git clone https://github.com/SEU-USUARIO/UC31.git
+git clone https://github.com/KaioHenrique7/UC31.git
 ```
 
 Entre na pasta
