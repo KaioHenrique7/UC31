@@ -1,11 +1,12 @@
 import { Router } from "express";
-import UsuarioRepository from "../models/UsuarioRepository";
+import repository from "../models/UsuarioRepository";
 
 const router = Router();
-router.post("/login", async (req, res) => {
+
+router.post("/login", (req, res) => {
     const { email, senha } = req.body;
 
-    const usuario = UsuarioRepository.login(email, senha);
+    const usuario = repository.login(email, senha);
 
     if (!usuario) {
         return res.status(401).json({
@@ -13,7 +14,7 @@ router.post("/login", async (req, res) => {
         });
     }
 
-    res.json({
+    return res.json({
         mensagem: "Login realizado com sucesso.",
         usuario
     });
