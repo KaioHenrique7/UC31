@@ -1,120 +1,78 @@
 import fs from "fs/promises";
 import path from "path";
+import { Cliente } from "../entities/Cliente";
 
 export class ClienteRepository {
-
     private arquivo = path.join(
         __dirname,
         "../../dados/clientes.json"
     );
 
-
-    private async ler() {
-
-        const dados = await fs.readFile(
-            this.arquivo,
-            "utf-8"
-        );
-
-        if (!dados.trim()) {
-            return [];
+    private async ler(): Promise<Cliente[]> {
+        try {
+            const dados = await fs.readFile(this.arquivo, "utf-8");
+            if (!dados.trim()) {
+                return [];
+            }
+            const clientesData = JSON.parse(dados);
+            return clientesData.map((data: any) => Cliente.fromJSON(data));
+        } catch (error: any) {
+            if (error.code === 'ENOENT') {
+                await fs.writeFile(this.arquivo, '[]', 'utf-8');
+                return [];
+            }
+            throw error;
         }
-
-        return JSON.parse(dados);
-
     }
 
-
-    private async salvar(clientes: any[]) {
-
+    private async salvar(clientes: Cliente[]): Promise<void> {
         await fs.writeFile(
             this.arquivo,
-            JSON.stringify(clientes, null, 2)
+            JSON.stringify(clientes.map(cliente => cliente.toJSON()), null, 2)
         );
-
     }
 
-
-    async listar() {
-
+    async listar(): Promise<Cliente[]> {
         return await this.ler();
-
     }
 
-
-    async buscarPorId(id: string) {
-
+    async buscarPorId(id: string): Promise<Cliente | undefined> {
         const clientes = await this.ler();
-
-        return clientes.find(
-            (cliente: any) => cliente.id === id
-        );
-
+        return clientes.find((cliente: Cliente) => cliente.id === id);
     }
 
-
-    async criar(cliente: any) {
-
+    async criar(clienteData: { nome: string; telefone: string; email: string }): Promise<Cliente> {
         const clientes = await this.ler();
-
-        const novoCliente = {
-
-            id: Date.now().toString(),
-
-            ...cliente
-
-        };
-
+        const novoCliente = new Cliente(Date.now().toString(), clienteData.nome, clienteData.telefone, clienteData.email);
+        novoCliente.validar(); // Garante que o objeto é válido antes de salvar
         clientes.push(novoCliente);
-
         await this.salvar(clientes);
-
         return novoCliente;
-
     }
 
-
-    async atualizar(id: string, dados: any) {
-
+    async atualizar(id: string, dados: { nome?: string; telefone?: string; email?: string }): Promise<Cliente> {
         const clientes = await this.ler();
-
-        const index = clientes.findIndex(
-            (cliente: any) => cliente.id === id
-        );
+        const index = clientes.findIndex((cliente: Cliente) => cliente.id === id);
 
         if (index === -1) {
-
-            throw new Error(
-                "Cliente não encontrado"
-            );
-
+            throw new Error("Cliente não encontrado");
         }
 
-        clientes[index] = {
-
-            ...clientes[index],
-
-            ...dados
-
-        };
-
+        const clienteExistente = clientes[index];
+        // Atualiza apenas os campos fornecidos
+        if (dados.nome !== undefined) clienteExistente.nome = dados.nome;
+        if (dados.telefone !== undefined) clienteExistente.telefone = dados.telefone;
+        if (dados.email !== undefined) clienteExistente.email = dados.email;
+        
+        clienteExistente.validar(); // Valida o objeto atualizado
+        clientes[index] = clienteExistente;
         await this.salvar(clientes);
-
-        return clientes[index];
-
+        return clienteExistente;
     }
 
-
-    async remover(id: string) {
-
+    async remover(id: string): Promise<void> {
         const clientes = await this.ler();
-
-        const novosClientes = clientes.filter(
-            (cliente: any) => cliente.id !== id
-        );
-
+        const novosClientes = clientes.filter((cliente: Cliente) => cliente.id !== id);
         await this.salvar(novosClientes);
-
     }
-
 }
