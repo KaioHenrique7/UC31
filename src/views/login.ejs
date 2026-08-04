@@ -3,117 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-
+    <title>Login - Oficina Mecânica</title>
+    <link rel="stylesheet" href="/css/style.css">
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
         }
 
-        body{
-            background:#f0f2f5;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
         }
 
-        .login{
-            background:#fff;
-            padding:40px;
-            width:350px;
-            border-radius:10px;
-            box-shadow:0 0 10px rgba(0,0,0,.2);
+        .login-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
         }
 
-        h1{
-            text-align:center;
-            margin-bottom:25px;
-            color:#0d6efd;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        label{
-            display:block;
-            margin-top:15px;
-            font-weight:bold;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
         }
 
-        input{
-            width:100%;
-            padding:10px;
-            margin-top:5px;
-            border:1px solid #ccc;
-            border-radius:5px;
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
         }
 
-        button{
-            width:100%;
-            padding:12px;
-            margin-top:25px;
-            border:none;
-            border-radius:5px;
-            background:#0d6efd;
-            color:white;
-            font-size:16px;
-            cursor:pointer;
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
         }
 
-        button:hover{
-            background:#084298;
+        .error {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #ffebee;
+            border-left: 4px solid #d32f2f;
+            border-radius: 3px;
         }
 
-        p{
-            text-align:center;
-            margin-top:20px;
+        .success {
+            color: #388e3c;
+            font-size: 14px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-left: 4px solid #388e3c;
+            border-radius: 3px;
         }
 
-        a{
-            text-decoration:none;
-            color:#0d6efd;
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        a:hover{
-            text-decoration:underline;
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .register-link a:hover {
+            color: #764ba2;
         }
     </style>
-
 </head>
 <body>
+    <div class="login-container">
+        <h1>Login</h1>
 
-<div class="login">
+        <% if (error) { %>
+            <div class="error"><%= error %></div>
+        <% } %>
 
-    <h1>Login</h1>
+        <form method="POST" action="/auth/login">
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
 
-    <form action="/login" method="POST">
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
 
-        <label>E-mail</label>
-        <input
-            type="email"
-            name="email"
-            placeholder="Digite seu e-mail"
-            required
-        >
+            <button type="submit" class="btn">Entrar</button>
+        </form>
 
-        <label>Senha</label>
-        <input
-            type="password"
-            name="senha"
-            placeholder="Digite sua senha"
-            required
-        >
-
-        <button type="submit">Entrar</button>
-
-    </form>
-
-    <p>
-        Voltar para a
-        <a href="/">Página Inicial</a>
-    </p>
-
-</div>
+        <div class="register-link">
+            Não tem conta? <a href="/auth/register">Registre-se aqui</a>
+        </div>
+    </div>
 </body>
 </html>
