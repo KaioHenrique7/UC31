@@ -3,6 +3,7 @@ import path from "path";
 import methodOverride from "method-override";
 
 import sessionconfing from "./confing/session";
+import auth from "./middlewares/auth";
 
 import clientesRoutes from "./routes/clientes";
 import veiculosRoutes from "./routes/veiculos";
@@ -82,7 +83,31 @@ app.use(
 
 
 // ==========================================
-// ROTAS
+// ROTAS PÚBLICAS (sem autenticação)
+// ==========================================
+
+app.use("/auth", authRoutes);
+
+
+// ==========================================
+// PÁGINA INICIAL
+// ==========================================
+
+app.get("/", (req, res) => {
+    res.render("home");
+});
+
+
+// ==========================================
+// MIDDLEWARE DE AUTENTICAÇÃO
+// Todas as rotas abaixo requerem login
+// ==========================================
+
+app.use(auth);
+
+
+// ==========================================
+// ROTAS PROTEGIDAS (com autenticação)
 // ==========================================
 
 app.use(
@@ -99,22 +124,6 @@ app.use(
     "/ordens",
     ordensRoutes
 );
-
-app.use(
-    "/auth",
-    authRoutes
-);
-
-
-// ==========================================
-// PÁGINA INICIAL
-// ==========================================
-
-app.get("/", (req, res) => {
-
-    res.render("home");
-
-});
 
 
 export default app;
