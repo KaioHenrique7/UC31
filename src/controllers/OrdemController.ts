@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { OrdemRepository } from "../models/OrdemRepository";
-import { OrdemServico } from "../entities/OrdemServiço";
+import { OrdemServico } from "../entities/OrdemServico";
 
 const router = Router();
 const repository = new OrdemRepository();

@@ -1,5 +1,5 @@
 import { OrdemRepository } from "../OrdemRepository";
-import { OrdemServico } from "../../entities/OrdemServiço";
+import { OrdemServico } from "../../entities/OrdemServico";
 import fs from "fs/promises";
 import path from "path";
 

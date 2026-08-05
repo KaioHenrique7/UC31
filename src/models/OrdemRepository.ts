@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { OrdemServico } from "../entities/OrdemServiço";
+import { OrdemServico } from "../entities/OrdemServico";
 
 export class OrdemRepository {
     private arquivo = path.join(
