@@ -1,13 +1,13 @@
 import { Router } from "express";
-import UsuarioRepository from "../models/UsuarioRepository";
-import { Usuario } from "../entities/Usuarios";
+import  UsuarioRepository  from "../models/UsuarioRepository";
 
 const router = Router();
 const repository = new UsuarioRepository();
 
 // Rota para exibir o formulário de login
 router.get("/login", (req, res) => {
-    res.render("login", { error: req.query.error });
+    const error = req.query.error ? decodeURIComponent(String(req.query.error)) : null;
+    res.render("login", { error });
 });
 
 // Rota para processar o login
@@ -15,34 +15,56 @@ router.post("/login", async (req, res) => {
     const { email, senha } = req.body;
 
     try {
+        if (!email || !senha) {
+            return res.redirect("/auth/login?error=" + encodeURIComponent("E-mail e senha são obrigatórios."));
+        }
+
         const usuario = await repository.login(email, senha);
 
         if (!usuario) {
-            return res.redirect("/auth/login?error=E-mail ou senha inválidos.");
+            return res.redirect("/auth/login?error=" + encodeURIComponent("E-mail ou senha inválidos."));
         }
 
-        // Salva o usuário na sessão
-        (req.session as any).usuario = usuario.toJSON();
-        res.redirect("/"); // Redireciona para a página inicial ou dashboard
+        // Salva o usuário na sessão (SEM a senha)
+        (req.session as any).usuario = {
+            id: usuario.id,
+            nome: usuario.nome,
+            email: usuario.email
+        };
+
+        res.redirect("/");
 
     } catch (error: any) {
-        res.status(500).render("login", { error: error.message });
+        res.redirect("/auth/login?error=" + encodeURIComponent(error.message));
     }
 });
 
 // Rota para exibir o formulário de registro
 router.get("/register", (req, res) => {
-    res.render("register", { error: req.query.error });
+    const error = req.query.error ? decodeURIComponent(String(req.query.error)) : null;
+    res.render("register", { error, usuario: {} });
 });
 
 // Rota para processar o registro
 router.post("/register", async (req, res) => {
     const { nome, email, senha } = req.body;
+
     try {
+        if (!nome || !email || !senha) {
+            return res.status(400).render("register", { 
+                error: "Nome, e-mail e senha são obrigatórios.", 
+                usuario: req.body 
+            });
+        }
+
         await repository.criar({ nome, email, senha });
-        res.redirect("/auth/login?success=Usuário registrado com sucesso! Faça login.");
+        res.redirect("/auth/login?success=" + encodeURIComponent("Usuário registrado com sucesso! Faça login."));
+
     } catch (error: any) {
-        res.status(400).render("register", { error: error.message, usuario: req.body });
+        res.status(400).render("register", { 
+            error: error.message, 
+            usuario: req.body 
+        });
     }
 });
 
