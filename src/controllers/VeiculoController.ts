@@ -1,121 +1,82 @@
 import { Router } from "express";
-import { VeiculoRepository } from "../models/VeiculoRepository";
-import { Veiculo } from "../entities/veiculos";
+import  UsuarioRepository  from "../models/UsuarioRepository";
 
 const router = Router();
-const repository = new VeiculoRepository();
+const repository = new UsuarioRepository();
 
-// GET /veiculos - Listar todos os veículos
-router.get("/", async (req, res) => {
-    try {
-        const veiculos = await repository.listar();
-        res.render("veiculos/index", { veiculos });
-    } catch (error: any) {
-        res.status(500).render("error", { message: error.message });
-    }
+// Rota para exibir o formulário de login
+router.get("/login", (req, res) => {
+    const error = req.query.error ? decodeURIComponent(String(req.query.error)) : null;
+    res.render("login", { error });
 });
 
-// GET /veiculos/novo - Exibir formulário de novo veículo
-router.get("/novo", (req, res) => {
-    res.render("veiculos/novo", { error: null, veiculo: {} });
-});
+// Rota para processar o login
+router.post("/login", async (req, res) => {
+    const { email, senha } = req.body;
 
-// GET /veiculos/:id - Exibir detalhes de um veículo
-router.get("/:id", async (req, res) => {
     try {
-        const veiculo = await repository.buscarPorId(req.params.id);
-        if (!veiculo) {
-            return res.status(404).render("error", { message: "Veículo não encontrado." });
+        if (!email || !senha) {
+            return res.redirect("/auth/login?error=" + encodeURIComponent("E-mail e senha são obrigatórios."));
         }
-        res.render("veiculos/detalhes", { veiculo });
-    } catch (error: any) {
-        res.status(500).render("error", { message: error.message });
-    }
-});
 
-// GET /veiculos/:id/editar - Exibir formulário de edição
-router.get("/:id/editar", async (req, res) => {
-    try {
-        const veiculo = await repository.buscarPorId(req.params.id);
-        if (!veiculo) {
-            return res.status(404).render("error", { message: "Veículo não encontrado." });
+        const usuario = await repository.login(email, senha);
+
+        if (!usuario) {
+            return res.redirect("/auth/login?error=" + encodeURIComponent("E-mail ou senha inválidos."));
         }
-        res.render("veiculos/editar", { veiculo, error: null });
+
+        // Salva o usuário na sessão (SEM a senha)
+        (req.session as any).usuario = {
+            id: usuario.id,
+            nome: usuario.nome,
+            email: usuario.email
+        };
+
+        res.redirect("/");
+
     } catch (error: any) {
-        res.status(500).render("error", { message: error.message });
+        res.redirect("/auth/login?error=" + encodeURIComponent(error.message));
     }
 });
 
-// POST /veiculos - Criar novo veículo
-router.post("/", async (req, res) => {
+// Rota para exibir o formulário de registro
+router.get("/register", (req, res) => {
+    const error = req.query.error ? decodeURIComponent(String(req.query.error)) : null;
+    res.render("register", { error, usuario: {} });
+});
+
+// Rota para processar o registro
+router.post("/register", async (req, res) => {
+    const { nome, email, senha } = req.body;
+
     try {
-        const { placa, modelo, marca, ano, clienteId, foto } = req.body;
-        
-        // Validação básica no controller
-        if (!placa || !modelo || !marca || !ano || !clienteId || !foto) {
-            return res.status(400).render("veiculos/novo", { 
-                error: "Todos os campos são obrigatórios.", 
-                veiculo: req.body 
+        if (!nome || !email || !senha) {
+            return res.status(400).render("register", { 
+                error: "Nome, e-mail e senha são obrigatórios.", 
+                usuario: req.body 
             });
         }
 
-        const novoVeiculo = await repository.criar({ 
-            placa, 
-            modelo, 
-            marca, 
-            ano: Number(ano), 
-            clienteId, 
-            foto 
-        });
-        res.redirect("/veiculos");
+        await repository.criar({ nome, email, senha });
+        res.redirect("/auth/login?success=" + encodeURIComponent("Usuário registrado com sucesso! Faça login."));
+
     } catch (error: any) {
-        res.status(400).render("veiculos/novo", { 
+        res.status(400).render("register", { 
             error: error.message, 
-            veiculo: req.body 
+            usuario: req.body 
         });
     }
 });
 
-// PUT /veiculos/:id - Atualizar veículo
-router.put("/:id", async (req, res) => {
-    try {
-        const { placa, modelo, marca, ano, clienteId, foto } = req.body;
-        
-        // Validação básica no controller
-        if (!placa || !modelo || !marca || !ano || !clienteId || !foto) {
-            const veiculo = await repository.buscarPorId(req.params.id);
-            return res.status(400).render("veiculos/editar", { 
-                error: "Todos os campos são obrigatórios.", 
-                veiculo: veiculo || req.body 
-            });
+// Rota para fazer logout
+router.get("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Erro ao destruir a sessão:", err);
+            return res.status(500).send("Erro ao fazer logout.");
         }
-
-        await repository.atualizar(req.params.id, { 
-            placa, 
-            modelo, 
-            marca, 
-            ano: Number(ano), 
-            clienteId, 
-            foto 
-        });
-        res.redirect("/veiculos");
-    } catch (error: any) {
-        const veiculo = await repository.buscarPorId(req.params.id);
-        res.status(400).render("veiculos/editar", { 
-            error: error.message, 
-            veiculo: veiculo || { id: req.params.id, ...req.body } 
-        });
-    }
-});
-
-// DELETE /veiculos/:id - Remover veículo
-router.delete("/:id", async (req, res) => {
-    try {
-        await repository.remover(req.params.id);
-        res.sendStatus(204);
-    } catch (error: any) {
-        res.status(500).json({ message: error.message });
-    }
+        res.redirect("/auth/login");
+    });
 });
 
 export default router;
