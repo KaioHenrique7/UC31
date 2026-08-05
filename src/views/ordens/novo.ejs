@@ -1,213 +1,213 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Nova Ordem - Oficina</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Ordem de Serviço - Oficina Mecânica</title>
+    <link rel="stylesheet" href="/css/style.css">
     <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            color: #222;
-        }
-
-        header {
-            background: #1769e0;
-            color: white;
-            padding: 25px;
-            text-align: center;
+            padding: 20px;
         }
 
         .container {
-            width: 90%;
-            max-width: 650px;
-            margin: 40px auto;
-        }
-
-        .card {
+            max-width: 600px;
+            margin: 0 auto;
             background: white;
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,.08);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
-            margin-top: 0;
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 20px;
+            color: white;
+            margin: -20px -20px 20px -20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        label {
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #333;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
             display: block;
-            margin-top: 18px;
-            margin-bottom: 7px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
         }
 
-        input,
-        textarea,
-        select {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        textarea {
-            min-height: 120px;
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-group textarea {
             resize: vertical;
+            min-height: 100px;
         }
 
-        .botoes {
+        .error {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #ffebee;
+            border-left: 4px solid #d32f2f;
+            border-radius: 3px;
+        }
+
+        .form-actions {
             display: flex;
             gap: 10px;
-            margin-top: 25px;
+            margin-top: 30px;
         }
 
-        button,
-        a {
-            padding: 12px 20px;
-            border-radius: 8px;
+        .btn-salvar, .btn-cancelar {
+            flex: 1;
+            padding: 12px;
             border: none;
-            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 15px;
+            transition: all 0.2s;
         }
 
-        button {
-            background: #1769e0;
+        .btn-salvar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
-        button:hover {
-            background: #0d55bd;
+        .btn-salvar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .voltar {
-            background: #555;
-            color: white;
+        .btn-cancelar {
+            background-color: #e0e0e0;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
+        .btn-cancelar:hover {
+            background-color: #d0d0d0;
+        }
     </style>
-
 </head>
-
 <body>
-
-<header>
-
-    <h1>🔧 Sistema da Oficina</h1>
-
-    <p>Cadastrar ordem de serviço</p>
-
-</header>
-
-<main class="container">
-
-    <div class="card">
-
-        <h2>Nova Ordem de Serviço</h2>
-
-        <form
-            action="/ordens"
-            method="POST"
-        >
-
-            <label for="veiculo">
-                Veículo
-            </label>
-
-            <input
-                id="veiculo"
-                type="text"
-                name="veiculo"
-                placeholder="ID ou identificação do veículo"
-                required
-            >
-
-            <label for="descricao">
-                Descrição do serviço
-            </label>
-
-            <textarea
-                id="descricao"
-                name="descricao"
-                placeholder="Descreva o serviço que será realizado..."
-                required
-            ></textarea>
-
-            <label for="valor">
-                Valor
-            </label>
-
-            <input
-                id="valor"
-                type="number"
-                name="valor"
-                step="0.01"
-                min="0"
-                placeholder="0,00"
-                required
-            >
-
-            <label for="status">
-                Status
-            </label>
-
-            <select
-                id="status"
-                name="status"
-                required
-            >
-
-                <option value="Aberta">
-                    Aberta
-                </option>
-
-                <option value="Em andamento">
-                    Em andamento
-                </option>
-
-                <option value="Finalizada">
-                    Finalizada
-                </option>
-
-            </select>
-
-            <div class="botoes">
-
-                <a
-                    href="/ordens"
-                    class="voltar"
-                >
-                    ← Voltar
-                </a>
-
-                <button type="submit">
-                    Salvar ordem
-                </button>
-
-            </div>
-
-        </form>
-
+    <div class="navbar">
+        <h2 style="margin: 0;">Oficina Mecânica</h2>
+        <div>
+            <a href="/clientes">Clientes</a>
+            <a href="/veiculos">Veículos</a>
+            <a href="/ordens">Ordens</a>
+            <a href="/auth/logout">Logout</a>
+        </div>
     </div>
 
-</main>
+    <div class="container">
+        <div class="header">
+            <h1>Nova Ordem de Serviço</h1>
+        </div>
 
+        <% if (error) { %>
+            <div class="error"><%= error %></div>
+        <% } %>
+
+        <form method="POST" action="/ordens">
+            <div class="form-group">
+                <label for="veiculo">Veículo:</label>
+                <input 
+                    type="text" 
+                    id="veiculo" 
+                    name="veiculo" 
+                    value="<%= ordem?.veiculo || '' %>"
+                    placeholder="Placa do veículo"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <textarea 
+                    id="descricao" 
+                    name="descricao" 
+                    required><%= ordem?.descricao || '' %></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="valor">Valor (R$):</label>
+                <input 
+                    type="number" 
+                    id="valor" 
+                    name="valor" 
+                    value="<%= ordem?.valor || '' %>"
+                    step="0.01"
+                    min="0"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="">Selecione um status</option>
+                    <option value="Aberta" <%= ordem?.status === 'Aberta' ? 'selected' : '' %>>Aberta</option>
+                    <option value="Em andamento" <%= ordem?.status === 'Em andamento' ? 'selected' : '' %>>Em andamento</option>
+                    <option value="Finalizada" <%= ordem?.status === 'Finalizada' ? 'selected' : '' %>>Finalizada</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-salvar">Salvar Ordem</button>
+                <a href="/ordens" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
 </body>
-
-</html>mw
+</html>

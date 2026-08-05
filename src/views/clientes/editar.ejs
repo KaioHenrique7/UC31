@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Cliente - Oficina Mecânica</title>
+    <title>Editar Veículo - Oficina Mecânica</title>
     <link rel="stylesheet" href="/css/style.css">
     <style>
         body {
@@ -19,7 +19,7 @@
             background: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1 );
         }
 
         .navbar {
@@ -133,11 +133,6 @@
         .btn-cancelar:hover {
             background-color: #d0d0d0;
         }
-
-        .btn-salvar:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
     </style>
 </head>
 <body>
@@ -153,48 +148,77 @@
 
     <div class="container">
         <div class="header">
-            <h1>Editar Cliente</h1>
+            <h1>Editar Veículo</h1>
         </div>
 
         <% if (error) { %>
             <div class="error"><%= error %></div>
         <% } %>
 
-        <form method="POST" action="/clientes/<%= cliente.id %>?_method=PUT">
+        <form method="POST" action="/veiculos/<%= veiculo.id %>?_method=PUT">
             <div class="form-group">
-                <label for="nome">Nome Completo:</label>
+                <label for="placa">Placa:</label>
                 <input 
                     type="text" 
-                    id="nome" 
-                    name="nome" 
-                    value="<%= cliente.nome %>"
+                    id="placa" 
+                    name="placa" 
+                    value="<%= veiculo.placa %>"
                     required>
             </div>
 
             <div class="form-group">
-                <label for="telefone">Telefone:</label>
+                <label for="modelo">Modelo:</label>
                 <input 
-                    type="tel" 
-                    id="telefone" 
-                    name="telefone" 
-                    value="<%= cliente.telefone %>"
-                    placeholder="(11) 99999-9999"
+                    type="text" 
+                    id="modelo" 
+                    name="modelo" 
+                    value="<%= veiculo.modelo %>"
                     required>
             </div>
 
             <div class="form-group">
-                <label for="email">E-mail:</label>
+                <label for="marca">Marca:</label>
                 <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value="<%= cliente.email %>"
+                    type="text" 
+                    id="marca" 
+                    name="marca" 
+                    value="<%= veiculo.marca %>"
                     required>
+            </div>
+
+            <div class="form-group">
+                <label for="ano">Ano:</label>
+                <input 
+                    type="number" 
+                    id="ano" 
+                    name="ano" 
+                    value="<%= veiculo.ano %>"
+                    min="1900"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="clienteId">ID do Cliente:</label>
+                <input 
+                    type="text" 
+                    id="clienteId" 
+                    name="clienteId" 
+                    value="<%= veiculo.clienteId %>"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="foto">Foto (URL):</label>
+                <input 
+                    type="text" 
+                    id="foto" 
+                    name="foto" 
+                    value="<%= veiculo.foto %>">
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn-salvar">Atualizar Cliente</button>
-                <a href="/clientes" class="btn-cancelar">Cancelar</a>
+                <button type="submit" class="btn-salvar">Atualizar Veículo</button>
+                <a href="/veiculos" class="btn-cancelar">Cancelar</a>
             </div>
         </form>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do Cliente - Oficina Mecânica</title>
+    <title>Detalhes do Veículo - Oficina Mecânica</title>
     <link rel="stylesheet" href="/css/style.css">
     <style>
         body {
@@ -130,32 +130,47 @@
 
     <div class="container">
         <div class="header">
-            <h1>Detalhes do Cliente</h1>
+            <h1>Detalhes do Veículo</h1>
         </div>
 
         <div class="info-group">
             <div class="info-label">ID:</div>
-            <div class="info-value"><%= cliente.id %></div>
+            <div class="info-value"><%= veiculo.id %></div>
         </div>
 
         <div class="info-group">
-            <div class="info-label">Nome Completo:</div>
-            <div class="info-value"><%= cliente.nome %></div>
+            <div class="info-label">Placa:</div>
+            <div class="info-value"><%= veiculo.placa %></div>
         </div>
 
         <div class="info-group">
-            <div class="info-label">Telefone:</div>
-            <div class="info-value"><%= cliente.telefone %></div>
+            <div class="info-label">Modelo:</div>
+            <div class="info-value"><%= veiculo.modelo %></div>
         </div>
 
         <div class="info-group">
-            <div class="info-label">E-mail:</div>
-            <div class="info-value"><%= cliente.email %></div>
+            <div class="info-label">Marca:</div>
+            <div class="info-value"><%= veiculo.marca %></div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">Ano:</div>
+            <div class="info-value"><%= veiculo.ano %></div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">Cliente ID:</div>
+            <div class="info-value"><%= veiculo.clienteId %></div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">Foto:</div>
+            <div class="info-value"><%= veiculo.foto %></div>
         </div>
 
         <div class="form-actions">
-            <a href="/clientes/<%= cliente.id %>/editar" class="btn-editar">Editar Cliente</a>
-            <a href="/clientes" class="btn-voltar">Voltar</a>
+            <a href="/veiculos/<%= veiculo.id %>/editar" class="btn-editar">Editar Veículo</a>
+            <a href="/veiculos" class="btn-voltar">Voltar</a>
         </div>
     </div>
 </body>

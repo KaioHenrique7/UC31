@@ -1,147 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veículos - Oficina Mecânica</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    <title>Clientes</title>
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
 
-    <link
-        rel="stylesheet"
-        href="/css/style.css"
-    >
+        .header h1 {
+            margin: 0;
+            color: #333;
+            font-size: 28px;
+        }
 
+        .btn-novo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-novo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background-color: #f9f9f9;
+            border-bottom: 2px solid #ddd;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-editar, .btn-deletar {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-editar {
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-editar:hover {
+            background-color: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-deletar {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-deletar:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .btn-deletar.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 20px;
+            color: white;
+            margin: -20px -20px 20px -20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+        }
+
+        .mensagem-vazia {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 16px;
+        }
+    </style>
 </head>
-
-<body>
-
-<header>
-
-    <h1> Clientes</h1>
-
-    <p>Clientes cadastrados na oficina</p>
-
-</header>
-
-
-<main class="container">
-
-    <div class="card">
-
-        <div class="botoes">
-
-            <a
-                href="/"
-                class="btn btn-secondary"
-            >
-                ← Início
-            </a>
-
-            <a
-                href="/clientes/cadastrar"
-                class="btn btn-primary"
-            >
-                 Novo Cliente
-            </a>
-
-        </div>
-
-        <br>
-
-
-        <% if (clientes.length === 0) { %>
-
-            <p>
-                Nenhum cliente cadastrado.
-            </p>
-
-        <% } else { %>
-
-
-            <% clientes.forEach(cliente => { %>
-
-                <div class="detalhe">
-
-                    <strong>Nome</strong>
-
-                    <span>
-                        <%= cliente.nome %>
-                    </span>
-
-
-                    <br>
-
-
-                    <strong>Telefone</strong>
-
-                    <span>
-                        <%= cliente.telefone %>
-                    </span>
-
-
-                    <br>
-
-
-                    <strong>Email</strong>
-
-                    <span>
-                        <%= cliente.email %>
-                    </span>
-
-
-                    <div class="botoes">
-
-                        <a
-                            href="/clientes/<%= cliente.id %>"
-                            class="btn btn-primary"
-                        >
-                             Detalhes
-                        </a>
-
-
-                        <a
-                            href="/clientes/<%= cliente.id %>/editar"
-                            class="btn btn-warning"
-                        >
-                             Editar
-                        </a>
-
-
-                        <form
-                            action="/clientes/<%= cliente.id %>?_method=DELETE"
-                            method="POST"
-                            style="display: inline;"
-                            onsubmit="return confirm('Tem certeza que deseja excluir este cliente?');"
-                        >
-
-                            <button
-                                type="submit"
-                                class="btn btn-danger"
-                            >
-                                Excluir
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            <% }) %>
-
-
-        <% } %>
-
-    </div>
-
-</main>
-
-</body>
-
-</html>
+<body

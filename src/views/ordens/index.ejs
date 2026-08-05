@@ -1,291 +1,239 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Ordens de Serviço - Oficina</title>
-
+    <title>Ordens de Serviço - Oficina Mecânica</title>
+    <link rel="stylesheet" href="/css/style.css">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            color: #222;
-        }
-
-        header {
-            background: #1769e0;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0 0 8px;
-        }
-
-        header p {
-            margin: 0;
+            padding: 20px;
         }
 
         .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 35px auto;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .topo {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
         }
 
-        .topo h2 {
+        .header h1 {
             margin: 0;
+            color: #333;
+            font-size: 28px;
         }
 
-        .botoes {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 11px 18px;
-            border-radius: 8px;
-            text-decoration: none;
+        .btn-novo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .btn-principal {
-            background: #1769e0;
-            color: white;
-        }
-
-        .btn-principal:hover {
-            background: #0d55bd;
-        }
-
-        .btn-voltar {
-            background: #555;
-            color: white;
-        }
-
-        .btn-detalhes {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .btn-editar {
-            background: #f0ad00;
-            color: white;
-        }
-
-        .tabela-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-            overflow-x: auto;
+        .btn-novo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background-color: #f9f9f9;
+            border-bottom: 2px solid #ddd;
         }
 
         th {
-            background: #1769e0;
-            color: white;
             padding: 15px;
             text-align: left;
+            font-weight: 600;
+            color: #333;
         }
 
         td {
-            padding: 15px;
+            padding: 12px 15px;
             border-bottom: 1px solid #eee;
         }
 
-        tr:hover {
-            background: #f7f9fc;
+        tbody tr:hover {
+            background-color: #f9f9f9;
         }
 
         .acoes {
             display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .status {
+        .btn-editar, .btn-deletar {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-editar {
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
             display: inline-block;
-            padding: 6px 12px;
+        }
+
+        .btn-editar:hover {
+            background-color: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-deletar {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-deletar:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
             border-radius: 20px;
-            background: #e8f1ff;
-            color: #1769e0;
-            font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: 600;
         }
 
-        .vazio {
+        .status-aberta {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-andamento {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-finalizada {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 20px;
+            color: white;
+            margin: -20px -20px 20px -20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+        }
+
+        .mensagem-vazia {
             text-align: center;
-            padding: 50px 20px;
-            color: #777;
-        }
-
-        .vazio h3 {
-            color: #333;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #777;
-        }
-
-        @media (max-width: 700px) {
-            .topo {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .botoes {
-                width: 100%;
-                flex-direction: column;
-            }
-
-            .botoes .btn {
-                text-align: center;
-            }
+            padding: 40px;
+            color: #999;
+            font-size: 16px;
         }
     </style>
 </head>
-
 <body>
-
-<header>
-    <h1> Sistema da Oficina</h1>
-    <p>Gerenciamento de ordens de serviço</p>
-</header>
-
-<main class="container">
-
-    <div class="topo">
-
-        <h2>Ordens de Serviço</h2>
-
-        <div class="botoes">
-
-            <a href="/" class="btn btn-voltar">
-                ← Início
-            </a>
-
-            <a href="/ordens/cadastrar" class="btn btn-principal">
-                + Nova ordem
-            </a>
-
+    <div class="navbar">
+        <h2 style="margin: 0;">Oficina Mecânica</h2>
+        <div>
+            <a href="/clientes">Clientes</a>
+            <a href="/veiculos">Veículos</a>
+            <a href="/ordens">Ordens</a>
+            <a href="/auth/logout" style="background-color: rgba(255, 255, 255, 0.2); padding: 8px 15px; border-radius: 5px;">Logout</a>
         </div>
-
     </div>
 
-    <% if (ordens.length === 0) { %>
-
-        <div class="tabela-container">
-
-            <div class="vazio">
-
-                <h3> Nenhuma ordem cadastrada</h3>
-
-                <p>Comece cadastrando uma nova ordem de serviço.</p>
-
-                <a href="/ordens/cadastrar" class="btn btn-principal">
-                    Criar ordem
-                </a>
-
-            </div>
-
+    <div class="container">
+        <div class="header">
+            <h1>Ordens de Serviço</h1>
+            <a href="/ordens/novo" class="btn-novo">+ Nova Ordem</a>
         </div>
 
-    <% } else { %>
-
-        <div class="tabela-container">
-
+        <% if (ordens && ordens.length > 0) { %>
             <table>
-
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Veículo</th>
                         <th>Descrição</th>
+                        <th>Valor</th>
                         <th>Status</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
                     <% ordens.forEach(ordem => { %>
-
-                        <tr>
-
+                        <tr class="registro-item" data-ordem-id="<%= ordem.id %>">
+                            <td><%= ordem.id %></td>
+                            <td><%= ordem.veiculo %></td>
+                            <td><%= ordem.descricao %></td>
+                            <td>R$ <%= ordem.valor.toFixed(2) %></td>
                             <td>
-                                <strong><%= ordem.id %></strong>
-                            </td>
-
-                            <td>
-                                <%= ordem.descricao || "Sem descrição" %>
-                            </td>
-
-                            <td>
-                                <span class="status">
-                                    <%= ordem.status || "Pendente" %>
+                                <span class="status-badge status-<%= ordem.status.toLowerCase().replace(' ', '') %>">
+                                    <%= ordem.status %>
                                 </span>
                             </td>
-
                             <td>
-
                                 <div class="acoes">
-
-                                    <a
-                                        href="/ordens/<%= ordem.id %>"
-                                        class="btn btn-detalhes">
-                                        Detalhes
-                                    </a>
-
-                                    <a
-                                        href="/ordens/<%= ordem.id %>/editar"
-                                        class="btn btn-editar">
-                                        Editar
-                                    </a>
-
+                                    <a href="/ordens/<%= ordem.id %>/editar" class="btn-editar">Editar</a>
+                                    <button 
+                                        class="btn-deletar" 
+                                        data-delete-id="<%= ordem.id %>"
+                                        onclick="deletarRegistro('<%= ordem.id %>', 'ordens')">
+                                        Deletar
+                                    </button>
                                 </div>
-
                             </td>
-
                         </tr>
-
-                    <% }) %>
-
+                    <% }); %>
                 </tbody>
-
             </table>
+        <% } else { %>
+            <div class="mensagem-vazia">
+                <p>Nenhuma ordem de serviço cadastrada. <a href="/ordens/novo">Criar nova ordem</a></p>
+            </div>
+        <% } %>
+    </div>
 
-        </div>
-
-    <% } %>
-
-</main>
-
-<footer>
-    Sistema de gerenciamento de oficina
-</footer>
-
+    <script src="/js/dynamic.js"></script>
 </body>
 </html>
